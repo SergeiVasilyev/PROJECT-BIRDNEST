@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!au4x4l%94r*6*h32_enlrrs-k()y0n4=-@m#-1!-zonvmb1et
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'birdnestapp'
 ]
 
 MIDDLEWARE = [
