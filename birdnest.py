@@ -1,4 +1,3 @@
-import enum
 import math
 import requests
 import xml.etree.ElementTree as ET
