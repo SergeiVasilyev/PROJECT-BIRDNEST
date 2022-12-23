@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report>
+    <deviceInformation deviceId="GUARDB1RD">
+        <listenRange>500000</listenRange>
+        <deviceStarted>2022-12-23T19:59:46.911Z</deviceStarted>
+        <uptimeSeconds>4572</uptimeSeconds>
+        <updateIntervalMs>2000</updateIntervalMs>
+    </deviceInformation>
+    <capture snapshotTimestamp="2022-12-23T21:15:58.652Z">
+        <drone>
+            <serialNumber>SN-60YGqVS1yr</serialNumber>
+            <model>Altitude X</model>
+            <manufacturer>DroneGoat Inc</manufacturer>
+            <mac>9c:d2:ac:13:77:71</mac>
+            <ipv4>66.11.30.157</ipv4>
+            <ipv6>3b9f:6b6d:a9eb:03f5:8af8:efd3:e683:8a6e</ipv6>
+            <firmware>4.0.1</firmware>
+            <positionY>250000.0743018639</positionY>
+            <positionX>250000.46056752343</positionX>
+            <altitude>4071.315361999966</altitude>
+        </drone>
+        <drone>
+            <serialNumber>SN-wKXMC3KgqP</serialNumber>
+            <model>Eagle</model>
+            <manufacturer>MegaBuzzer Corp</manufacturer>
+            <mac>2d:00:18:9f:96:a5</mac>
+            <ipv4>8.42.135.81</ipv4>
+            <ipv6>aa20:50a7:be54:d081:77d6:6cc8:9de5:b66b</ipv6>
+            <firmware>2.4.3</firmware>
+            <positionY>161469.76460890434</positionY>
+            <positionX>381697.44580188574</positionX>
+            <altitude>4016.9662967622216</altitude>
+        </drone>
+
+    </capture>
+</report>

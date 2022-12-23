@@ -1,4 +1,26 @@
+import os
+from django.http import (
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseNotFound,
+    HttpResponseRedirect,
+    JsonResponse,
+    StreamingHttpResponse,
+    HttpRequest,
+    QueryDict
+)
 from django.shortcuts import render
+from django.conf import settings
+
+from .birdnest import *
 
 def main(request):
-    return render(request, 'birdnest/index.html')
+    monitor = drone_monitor()
+    drones_in_NDZ = monitor.monitor_main()
+
+
+
+    return render(request, 'birdnest/index.html', {'drones_in_NDZ': drones_in_NDZ})
+    # return HttpResponse(os.path.join(settings.BASE_DIR, 'birdnestapp/templates'))
+    # return HttpResponse(drones_in_NDZ)
+
