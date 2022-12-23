@@ -31,7 +31,7 @@ class xml_parsre:
         self.root = root
         self.drones_list = []
         self.drones_subdic = {}
-        self.device_dic = {}
+        self.device_report = {}
 
     def drones(self):
         # print(self.root.find('deviceInformation').attrib)
@@ -42,12 +42,21 @@ class xml_parsre:
         # print(self.root.find('deviceInformation').attrib)
         # print(self.root.find('deviceInformation').keys()[0])
         # print(self.root.find('deviceInformation').get('deviceId))
-        self.device_dic = self.root.find('deviceInformation').attrib
+        self.device_report = self.root.find('deviceInformation').attrib
         for deviceInfo in self.root.find('deviceInformation'):
-            self.device_dic[deviceInfo.tag] = deviceInfo.text
-        self.device_dic['snapshotTimestamp'] = self.root.find('capture').get('snapshotTimestamp')
-        # print(self.device_dic)
+            self.device_report[deviceInfo.tag] = deviceInfo.text
+        self.device_report['snapshotTimestamp'] = self.root.find('capture').get('snapshotTimestamp')
+        # print(self.device_report)
 
+        capture = self.root.findall('capture')
+        # print(capture[0].findall('drone'))
+        for drone in capture[0].findall('drone'):
+            for drn_items in drone:
+                self.drones_subdic[drn_items.tag] = drn_items.text
+                # print(drn_items.tag, drn_items.text)
+            self.drones_list.append(self.drones_subdic)
+        self.device_report['drone_list'] = self.drones_list
+            
         capture = self.root.findall('capture')
         for el in capture:
             droneEls = el.findall('drone')
@@ -60,14 +69,15 @@ class xml_parsre:
                 # print(drn.find('serialNumber').text)
                 # print(drn.find('positionY').text)
         # print(self.drones_list)
-        self.device_dic['drone_list'] = self.drones_list
-        print(self.device_dic)
+        self.device_report['drone_list'] = self.drones_list
+        print(self.device_report)
+        return self.device_report
 
 
 def main():
     monitor = drone_monitor()
     get_xml = xml_parsre()
-    get_xml.drones()
+    # get_xml.drones()
     # monitor.monitor_main(*position)
     # monitor.monitor_main()
 
@@ -75,11 +85,14 @@ class drone_monitor:
     def __init__(self):
         self.radius_protect_area = 100000
         self.center_x_protect_area = 250000
-        self.center_y_protect_area = 250000   
+        self.center_y_protect_area = 250000
+        get_xml = xml_parsre()
+        self.drones_report = get_xml.drones()
 
     def monitor_main(self):
         print('List of drones violating the no-fly zone')
-        # print(self.drones())
+        # print(self.drones_report['drone_list'])
+
         for drone in self.drones().findall('drone'):
             serialNumber = drone.find('serialNumber').text
             drn_pos_x = drone.find('positionX').text
