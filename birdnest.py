@@ -3,25 +3,27 @@ import math
 import requests
 import xml.etree.ElementTree as ET
 
-# position = [250000, 250000]
-# position = [400000, 400000]
+# headers = {'Accept': 'application/json'}
+# x = requests.get('http://assignments.reaktor.com/birdnest/pilots/SN-exdp-6bzDn', headers=headers)
+# print(x.json()['pilotId'])
 
-# x = requests.get('http://assignments.reaktor.com/birdnest/drones')
-# print(x.content)
+class pilot_info:
+    def __init__(self, serialNumber):
+        # self.serialNumber = serialNumber
+        pilot = self.parse(serialNumber)
 
-# tree = ET.fromstring(x.content) # Read from string
-# for child in tree.iter('*'):
-#     print(child.tag, child.attrib, child.text)
+        self.pilotId = pilot['pilotId']
+        self.firstName = pilot['firstName']
+        self.lastName = pilot['lastName']
+        self.phoneNumber = pilot['phoneNumber']
+        self.createdDt = pilot['createdDt']
+        self.email = pilot['email']
 
-# for drone in tree.findall('drone'):
-#     print(drone.find('serialNumber').text)
-
-# capture = tree.findall('capture')
-# for el in capture:
-#     droneEls = el.findall('drone')
-#     print(droneEls)
-#     for drn in droneEls:
-#         print(drn.find('serialNumber').text)
+    def parse(self, serialNumber):
+        headers = {'Accept': 'application/json'}
+        x = requests.get(f'http://assignments.reaktor.com/birdnest/pilots/{serialNumber}', headers=headers)
+        responseJSON = x.json()
+        return responseJSON
 
 
 class xml_parsre:
@@ -57,6 +59,7 @@ class xml_parsre:
 
 
 def main():
+    f1 = pilot_info('SN-exdp-6bzDn')
     monitor = drone_monitor()
     # get_xml = xml_parsre()
     # get_xml.drones()
@@ -70,24 +73,22 @@ class drone_monitor:
         self.center_y_protect_area = 250000
         get_xml = xml_parsre()
         self.drones_report = get_xml.drones()
+        self.drone_list = []
 
     def monitor_main(self):
-        print('List of drones violating the no-fly zone')
-        # print(self.drones_report['drone_list'])
-
         for drone in self.drones_report['drone_list']:
-            self.is_in_protect_area(self, drone['positionX'], drone['positionY'])
+            # print(drone['positionX'], drone['positionY'])
+            if self.is_in_protect_area(float(drone['positionX']), float(drone['positionY'])):
+                # print(drone['serialNumber'])
+                pilot = pilot_info(drone['serialNumber'])
+                # print(pilot.__dict__)
+                self.drone_list.append(drone)
 
-        # for drone in self.drones().findall('drone'):
-        #     serialNumber = drone.find('serialNumber').text
-        #     drn_pos_x = drone.find('positionX').text
-        #     drn_pos_y = drone.find('positionY').text
-
-        #     print(serialNumber, drn_pos_x, drn_pos_y)
-
-        #     drone_point = self.is_in_protect_area(drn_pos_x, drn_pos_y)
-        #     if drone_point is not None:
-        #         print('This drone in no drone zone', drone_point)
+                drone_dict = drone
+                drone_dict['pilot'] = pilot.__dict__
+        # print(self.drone_list)
+        print(drone_dict)
+        return self.drone_list
 
     def get_drones(self):
         req = requests.get('http://assignments.reaktor.com/birdnest/drones')
@@ -97,11 +98,6 @@ class drone_monitor:
     def drones(self):
         drones = self.get_drones()
         return drones
-
-    def make_list(self):
-        print('List of drones violating the no-fly zone')
-
-
 
     def is_in_protect_area(self, drn_pos_x, drn_pos_y):
         res = math.sqrt((drn_pos_x - self.center_x_protect_area) ** 2 + (drn_pos_y - self.center_y_protect_area) ** 2)

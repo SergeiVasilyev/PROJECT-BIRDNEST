@@ -1,83 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <report>
-  <deviceInformation deviceId="GUARDB1RD">
-    <listenRange>500000</listenRange>
-    <deviceStarted>2022-12-18T16:41:55.751Z</deviceStarted>
-    <uptimeSeconds>53143</uptimeSeconds>
-    <updateIntervalMs>2000</updateIntervalMs>
-  </deviceInformation>
-  <capture snapshotTimestamp="2022-12-19T07:27:38.575Z">
-    <drone>
-      <serialNumber>SN-HL1FT_96M3</serialNumber>
-      <model>Eagle</model>
-      <manufacturer>MegaBuzzer Corp</manufacturer>
-      <mac>90:46:8e:86:b5:10</mac>
-      <ipv4>222.38.244.170</ipv4>
-      <ipv6>760f:53d7:db58:3515:023a:1c98:d113:c815</ipv6>
-      <firmware>9.2.2</firmware>
-      <positionY>427672.4689308251</positionY>
-      <positionX>232524.52204536131</positionX>
-      <altitude>4159.814158184042</altitude>
-    </drone>
-    <drone>
-      <serialNumber>SN-NaljYxwS5n</serialNumber>
-      <model>HRP-DRP 1 Pro</model>
-      <manufacturer>ProDröne Ltd</manufacturer>
-      <mac>1e:e4:02:e6:1b:d7</mac>
-      <ipv4>230.224.52.81</ipv4>
-      <ipv6>2a9f:f764:cf86:14c5:fe3f:10cd:a6e6:146e</ipv6>
-      <firmware>6.2.9</firmware>
-      <positionY>248843.19674907654</positionY>
-      <positionX>84775.04529281118</positionX>
-      <altitude>4929.720501109234</altitude>
-    </drone>
-    <drone>
-      <serialNumber>SN-jVuEMaSwqq</serialNumber>
-      <model>HRP-DRP 1 S</model>
-      <manufacturer>ProDröne Ltd</manufacturer>
-      <mac>9c:f7:4d:fd:e2:eb</mac>
-      <ipv4>252.42.219.92</ipv4>
-      <ipv6>9492:3408:d133:3b02:9313:e8f9:8194:ae61</ipv6>
-      <firmware>8.5.4</firmware>
-      <positionY>420902.1318653541</positionY>
-      <positionX>133518.26615227788</positionX>
-      <altitude>4535.9598770145685</altitude>
-    </drone>
-    <drone>
-      <serialNumber>SN-URyRkzLxFd</serialNumber>
-      <model>Altitude X</model>
-      <manufacturer>DroneGoat Inc</manufacturer>
-      <mac>98:6a:be:8b:c4:c4</mac>
-      <ipv4>137.26.228.124</ipv4>
-      <ipv6>2bc1:c74b:ecb5:e0ff:b2e6:487b:639d:10b9</ipv6>
-      <firmware>5.9.7</firmware>
-      <positionY>111454.1606115863</positionY>
-      <positionX>267250.62280163576</positionX>
-      <altitude>4374.566581487961</altitude>
-    </drone>
-    <drone>
-      <serialNumber>SN-I3paE4AX6w</serialNumber>
-      <model>Eagle</model>
-      <manufacturer>MegaBuzzer Corp</manufacturer>
-      <mac>ec:c8:31:89:ac:9c</mac>
-      <ipv4>77.123.195.48</ipv4>
-      <ipv6>c656:6456:fa53:53c8:146a:4c36:92f8:6354</ipv6>
-      <firmware>8.1.1</firmware>
-      <positionY>393363.4293050588</positionY>
-      <positionX>21514.955900668327</positionX>
-      <altitude>4753.85011274747</altitude>
-    </drone>
-    <drone>
-      <serialNumber>SN-_BaRGDfv8x</serialNumber>
-      <model>HRP-DRP 1 Pro</model>
-      <manufacturer>ProDröne Ltd</manufacturer>
-      <mac>01:9f:4e:5b:cc:a2</mac>
-      <ipv4>156.139.156.170</ipv4>
-      <ipv6>c59d:1ec2:1f35:f063:4a23:84b9:0ec9:ef96</ipv6>
-      <firmware>3.2.3</firmware>
-      <positionY>317068.5121364952</positionY>
-      <positionX>118891.66500214605</positionX>
-      <altitude>4676.549219609694</altitude>
-    </drone>
-  </capture>
+    <deviceInformation deviceId="GUARDB1RD">
+        <listenRange>500000</listenRange>
+        <deviceStarted>2022-12-23T07:02:16.945Z</deviceStarted>
+        <uptimeSeconds>36433</uptimeSeconds>
+        <updateIntervalMs>2000</updateIntervalMs>
+    </deviceInformation>
+    <capture snapshotTimestamp="2022-12-23T17:09:30.309Z">
+        <drone>
+            <serialNumber>SN-WzS9sq-Hod</serialNumber>
+            <model>HRP-DRP 1</model>
+            <manufacturer>ProDröne Ltd</manufacturer>
+            <mac>c7:8f:c4:55:3a:e8</mac>
+            <ipv4>228.246.243.38</ipv4>
+            <ipv6>cfd1:cacd:a082:56cd:54aa:0c79:8ffd:3bb2</ipv6>
+            <firmware>5.7.3</firmware>
+            <positionY>140849.63500865083</positionY>
+            <positionX>496587.090384337</positionX>
+            <altitude>4243.595480732285</altitude>
+        </drone>
+        <drone>
+            <serialNumber>SN-WMXTI56CfC</serialNumber>
+            <model>HRP-DRP 1</model>
+            <manufacturer>ProDröne Ltd</manufacturer>
+            <mac>bd:a2:c3:ba:83:0d</mac>
+            <ipv4>87.213.100.190</ipv4>
+            <ipv6>19e3:26e7:04ab:6c34:0028:cfb8:7042:b0b3</ipv6>
+            <firmware>8.5.8</firmware>
+            <positionY>470952.9474125009</positionY>
+            <positionX>225361.92946146082</positionX>
+            <altitude>4283.330027623389</altitude>
+        </drone>
+        <drone>
+            <serialNumber>SN-sxIVPTRpLv</serialNumber>
+            <model>HRP-DRP 1 Max</model>
+            <manufacturer>ProDröne Ltd</manufacturer>
+            <mac>4f:0b:ad:0f:7f:93</mac>
+            <ipv4>116.28.107.178</ipv4>
+            <ipv6>8542:a9bc:4657:6f57:36b2:bc92:5acc:74fd</ipv6>
+            <firmware>6.9.8</firmware>
+            <positionY>81395.0926418634</positionY>
+            <positionX>208145.77735825285</positionX>
+            <altitude>4598.822347631116</altitude>
+        </drone>
+        <drone>
+            <serialNumber>SN-YuyoSCKpZu</serialNumber>
+            <model>Eagle</model>
+            <manufacturer>MegaBuzzer Corp</manufacturer>
+            <mac>a3:5c:04:6c:ab:88</mac>
+            <ipv4>73.71.188.43</ipv4>
+            <ipv6>6c02:cef6:75a0:fa7e:7508:a0e7:754a:ca9c</ipv6>
+            <firmware>8.6.5</firmware>
+            <positionY>453553.2911110646</positionY>
+            <positionX>49759.74367304625</positionX>
+            <altitude>4798.8982336842855</altitude>
+        </drone>
+        <drone>
+            <serialNumber>SN-W6GZM4q-vN</serialNumber>
+            <model>Altitude X</model>
+            <manufacturer>DroneGoat Inc</manufacturer>
+            <mac>85:01:01:5c:83:76</mac>
+            <ipv4>218.15.177.34</ipv4>
+            <ipv6>0576:c7a9:619e:d304:9880:b5e1:7776:1d5e</ipv6>
+            <firmware>1.0.6</firmware>
+            <positionY>251439.09322983507</positionY>
+            <positionX>384924.3722870339</positionX>
+            <altitude>4173.653182450506</altitude>
+        </drone>
+    </capture>
 </report>

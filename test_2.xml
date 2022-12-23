@@ -8,28 +8,28 @@
   </deviceInformation>
   <capture snapshotTimestamp="2022-12-19T07:27:38.575Z">
     <drone>
-      <serialNumber>SN-HL1FT_96M3</serialNumber>
-      <model>Eagle</model>
-      <manufacturer>MegaBuzzer Corp</manufacturer>
-      <mac>90:46:8e:86:b5:10</mac>
-      <ipv4>222.38.244.170</ipv4>
-      <ipv6>760f:53d7:db58:3515:023a:1c98:d113:c815</ipv6>
-      <firmware>9.2.2</firmware>
-      <positionY>427672.4689308251</positionY>
-      <positionX>232524.52204536131</positionX>
-      <altitude>4159.814158184042</altitude>
+        <serialNumber>SN-WzS9sq-Hod</serialNumber>
+        <model>HRP-DRP 1</model>
+        <manufacturer>ProDröne Ltd</manufacturer>
+        <mac>c7:8f:c4:55:3a:e8</mac>
+        <ipv4>228.246.243.38</ipv4>
+        <ipv6>cfd1:cacd:a082:56cd:54aa:0c79:8ffd:3bb2</ipv6>
+        <firmware>5.7.3</firmware>
+        <positionY>250000.63500865083</positionY>
+        <positionX>250000.090384337</positionX>
+        <altitude>4243.595480732285</altitude>
     </drone>
     <drone>
-      <serialNumber>SN-NaljYxwS5n</serialNumber>
-      <model>HRP-DRP 1 Pro</model>
-      <manufacturer>ProDröne Ltd</manufacturer>
-      <mac>1e:e4:02:e6:1b:d7</mac>
-      <ipv4>230.224.52.81</ipv4>
-      <ipv6>2a9f:f764:cf86:14c5:fe3f:10cd:a6e6:146e</ipv6>
-      <firmware>6.2.9</firmware>
-      <positionY>248843.19674907654</positionY>
-      <positionX>84775.04529281118</positionX>
-      <altitude>4929.720501109234</altitude>
+        <serialNumber>SN-WMXTI56CfC</serialNumber>
+        <model>HRP-DRP 1</model>
+        <manufacturer>ProDröne Ltd</manufacturer>
+        <mac>bd:a2:c3:ba:83:0d</mac>
+        <ipv4>87.213.100.190</ipv4>
+        <ipv6>19e3:26e7:04ab:6c34:0028:cfb8:7042:b0b3</ipv6>
+        <firmware>8.5.8</firmware>
+        <positionY>470952.9474125009</positionY>
+        <positionX>225361.92946146082</positionX>
+        <altitude>4283.330027623389</altitude>
     </drone>
 
   </capture>

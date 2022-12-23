@@ -1,0 +1,9 @@
+{
+    "pilotId": "P-5qPKr5UBMi",
+    "firstName": "Scottie",
+    "lastName": "Barrows",
+    "phoneNumber": "+210681227465",
+    "createdDt": "2022-10-06T16:48:04.333Z",
+    "email": "scottie.barrows@example.com",
+    "drone": "{'serialNumber': 'SN-HL1FT_96M3', 'model': 'Eagle', 'manufacturer': 'MegaBuzzer Corp', 'mac': '90:46:8e:86:b5:10', 'ipv4': '222.38.244.170', 'ipv6': '760f:53d7:db58:3515:023a:1c98:d113:c815', 'firmware': '9.2.2', 'positionY': '250000.4689308251', 'positionX': '250000.52204536131', 'altitude': '4159.814158184042'}"
+}
