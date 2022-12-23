@@ -4,13 +4,8 @@ import requests
 import xml.etree.ElementTree as ET
 import pandas
 
-# headers = {'Accept': 'application/json'}
-# x = requests.get('http://assignments.reaktor.com/birdnest/pilots/SN-exdp-6bzDn', headers=headers)
-# print(x.json()['pilotId'])
-
 class pilot_info:
     def __init__(self, serialNumber):
-        # self.serialNumber = serialNumber
         pilot = self.parse(serialNumber)
 
         self.pilotId = pilot['pilotId']
@@ -49,11 +44,9 @@ class xml_parsre:
         for drone in capture[0].findall('drone'):
             for drn_items in drone:
                 self.drones_subdic[drn_items.tag] = drn_items.text
-                # print(drn_items.tag, drn_items.text)
 
             self.drones_list.append(self.drones_subdic)
             self.drones_subdic = {}
-            # print(self.drones_list)
 
         self.device_report['drone_list'] = self.drones_list
         return self.device_report
@@ -77,16 +70,12 @@ class drone_monitor:
                 get_drones['pilot'] = pilot.__dict__ # add pilot dict in drone dict
                 self.drone_dict[drone['serialNumber']] = get_drones # combine all drones informations
 
-        # print(self.drone_dict)
         return self.drone_dict
 
-    def get_drones(self):
+    def drones(self):
         req = requests.get('http://assignments.reaktor.com/birdnest/drones')
         root = ET.fromstring(req.content)
-        return root
-    
-    def drones(self):
-        drones = self.get_drones()
+        drones = root
         return drones
 
     def is_in_protect_area(self, drn_pos_x, drn_pos_y):
