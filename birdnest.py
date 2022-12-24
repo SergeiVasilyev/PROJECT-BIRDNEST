@@ -2,6 +2,7 @@ import math
 import requests
 import xml.etree.ElementTree as ET
 import pandas
+import time
 
 class pilot_info:
     def __init__(self, serialNumber):
@@ -89,33 +90,34 @@ class drone_monitor:
 
 
 def main():
-    combine_list = []
-    monitor = drone_monitor()
-    drones_in_NDZ = monitor.monitor_main()
-    # print(drones_in_NDZ)
-    for key, drone in drones_in_NDZ.items():
-        list_of_drones_NDZ = {}
-        # print(key, drone)
-        # print(drone['serialNumber'])
-        # print(drone['pilot']['pilotId'])
-        list_of_drones_NDZ['Drone SN'] = drone['serialNumber']
-        list_of_drones_NDZ['Drone model'] = drone['model']
-        list_of_drones_NDZ['Drone mac'] = drone['mac']
-        list_of_drones_NDZ['Drone positionX'] = drone['positionX']
-        list_of_drones_NDZ['Drone positionY'] = drone['positionY']
-        list_of_drones_NDZ['pilot Id'] = drone['pilot']['pilotId']
-        list_of_drones_NDZ['pilot first name'] = drone['pilot']['firstName']
-        list_of_drones_NDZ['pilot last name'] = drone['pilot']['lastName']
-        # list_of_drones_NDZ['pilot phone number'] = drone['pilot']['phoneNumber']
-        # list_of_drones_NDZ['pilot createdDt'] = drone['pilot']['createdDt']
-        list_of_drones_NDZ['pilot email'] = drone['pilot']['email']
+    while True:
+        combine_list = []
+        monitor = drone_monitor()
+        drones_in_NDZ = monitor.monitor_main()
+        # print(drones_in_NDZ)
+        for key, drone in drones_in_NDZ.items():
+            list_of_drones_NDZ = {}
+            # print(key, drone)
+            # print(drone['serialNumber'])
+            # print(drone['pilot']['pilotId'])
+            list_of_drones_NDZ['Drone SN'] = drone['serialNumber']
+            list_of_drones_NDZ['Drone model'] = drone['model']
+            list_of_drones_NDZ['Drone mac'] = drone['mac']
+            list_of_drones_NDZ['Drone positionX'] = drone['positionX']
+            list_of_drones_NDZ['Drone positionY'] = drone['positionY']
+            list_of_drones_NDZ['pilot Id'] = drone['pilot']['pilotId']
+            list_of_drones_NDZ['pilot first name'] = drone['pilot']['firstName']
+            list_of_drones_NDZ['pilot last name'] = drone['pilot']['lastName']
+            # list_of_drones_NDZ['pilot phone number'] = drone['pilot']['phoneNumber']
+            # list_of_drones_NDZ['pilot createdDt'] = drone['pilot']['createdDt']
+            list_of_drones_NDZ['pilot email'] = drone['pilot']['email']
 
-        combine_list.append(list_of_drones_NDZ)
+            combine_list.append(list_of_drones_NDZ)
 
-    print(combine_list)    
-    if combine_list:
-        print(pandas.DataFrame(combine_list))
-
+        # print(combine_list)
+        if combine_list:
+            print(pandas.DataFrame(combine_list))
+        time.sleep(2)
 
 
 if __name__ == "__main__":

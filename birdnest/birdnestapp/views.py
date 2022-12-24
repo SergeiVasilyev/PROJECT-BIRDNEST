@@ -22,5 +22,5 @@ def main(request):
 
     return render(request, 'birdnest/index.html', {'drones_in_NDZ': drones_in_NDZ})
     # return HttpResponse(os.path.join(settings.BASE_DIR, 'birdnestapp/templates'))
-    # return HttpResponse(drones_in_NDZ)
+
 

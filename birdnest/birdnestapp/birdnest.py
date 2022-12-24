@@ -5,6 +5,7 @@ import xml.etree.ElementTree as ET
 import pandas
 
 from django.conf import settings
+import sqlite3
 
 
 class pilot_info:
@@ -19,18 +20,21 @@ class pilot_info:
         self.email = pilot['email']
 
     def parse(self, serialNumber):
-        headers = {'Accept': 'application/json'}
-        x = requests.get(f'http://assignments.reaktor.com/birdnest/pilots/{serialNumber}', headers=headers)
-        responseJSON = x.json()
+        try:
+            headers = {'Accept': 'application/json'}
+            x = requests.get(f'http://assignments.reaktor.com/birdnest/pilots/{serialNumber}', headers=headers)
+            responseJSON = x.json()
+        except:
+            responseJSON = None
         return responseJSON
 
 
 class xml_parsre:
     def __init__(self):
-        # x = requests.get('http://assignments.reaktor.com/birdnest/drones')
-        # root = ET.fromstring(x.content) # Read from string
+        x = requests.get('http://assignments.reaktor.com/birdnest/drones')
+        root = ET.fromstring(x.content) # Read from string
         # root = ET.parse(os.path.join(settings.BASE_DIR, 'birdnestapp/test_2.xml'))
-        root = ET.parse('birdnestapp/test_2.xml')
+        # root = ET.parse('birdnestapp/test.xml')
         self.root = root
         self.drones_list = []
         self.drones_subdic = {}
@@ -69,10 +73,13 @@ class drone_monitor:
         for drone in self.drones_report['drone_list']:
             if self.is_in_protect_area(float(drone['positionX']), float(drone['positionY'])):
                 get_drones = {}
-                pilot = pilot_info(drone['serialNumber']) # Get pilot info as object from httprequest
-                get_drones = drone # Copy drone to dict
-                get_drones['pilot'] = pilot.__dict__ # add pilot dict in drone dict
-                self.drone_dict[drone['serialNumber']] = get_drones # combine all drones informations
+                try:
+                    pilot = pilot_info(drone['serialNumber']) # Get pilot info as object from httprequest
+                    get_drones = drone # Copy drone to dict
+                    get_drones['pilot'] = pilot.__dict__ # add pilot dict in drone dict
+                    self.drone_dict[drone['serialNumber']] = get_drones # combine all drones informations
+                except:
+                    pass
 
         return self.drone_dict
 
@@ -120,7 +127,25 @@ def main():
     print(combine_list)    
     if combine_list:
         print(pandas.DataFrame(combine_list))
+        
+    try:
+        sqliteConnection = sqlite3.connect('db.sqlite3')
+        cursor = sqliteConnection.cursor()
+        print("Database created and Successfully Connected to SQLite")
 
+        sqlite_select_Query = "select sqlite_version();"
+        # cursor.execute(sqlite_select_Query)
+        cursor.execute("SELECT * FROM birdnestapp_pilotdata")
+        record = cursor.fetchall()
+        print("SQLite Database Version is: ", record)
+        cursor.close()
+
+    except sqlite3.Error as error:
+        print("Error while connecting to sqlite", error)
+    finally:
+        if sqliteConnection:
+            sqliteConnection.close()
+            print("The SQLite connection is closed")
 
 
 if __name__ == "__main__":

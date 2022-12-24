@@ -3,12 +3,12 @@ from django.db import models
 
 
 class PilotData(models.Model):
-    pilotId = models.CharField(max_length=20)
-    firstName = models.CharField(max_length=20)
-    lastName = models.CharField(max_length=20)
-    phoneNumber = models.CharField(max_length=15)
-    createdDt = models.DateField()
-    email = models.EmailField()
+    pilotId = models.CharField(max_length=20, blank=True, null=True)
+    firstName = models.CharField(max_length=20, blank=True, null=True)
+    lastName = models.CharField(max_length=20, blank=True, null=True)
+    phoneNumber = models.CharField(max_length=15, blank=True, null=True)
+    createdDt = models.DateField(blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
     
     def __str__(self):
         return '%s' % (self.pilotId)
