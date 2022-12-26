@@ -2,70 +2,70 @@
 <report>
     <deviceInformation deviceId="GUARDB1RD">
         <listenRange>500000</listenRange>
-        <deviceStarted>2022-12-24T09:21:29.861Z</deviceStarted>
-        <uptimeSeconds>1771</uptimeSeconds>
+        <deviceStarted>2022-12-26T06:02:40.918Z</deviceStarted>
+        <uptimeSeconds>16652</uptimeSeconds>
         <updateIntervalMs>2000</updateIntervalMs>
     </deviceInformation>
-    <capture snapshotTimestamp="2022-12-24T09:51:01.204Z">
+    <capture snapshotTimestamp="2022-12-26T10:40:13.166Z">
         <drone>
-            <serialNumber>SN-ZPv17Z9iKq</serialNumber>
+            <serialNumber>SN-lNG2dqzo63</serialNumber>
             <model>Altitude X</model>
             <manufacturer>DroneGoat Inc</manufacturer>
-            <mac>c0:a8:be:99:79:a6</mac>
-            <ipv4>176.194.139.14</ipv4>
-            <ipv6>d319:8dea:55c7:06f5:87d9:4529:778e:395f</ipv6>
-            <firmware>1.2.3</firmware>
-            <positionY>118052.35861201373</positionY>
-            <positionX>183560.7411375692</positionX>
-            <altitude>4914.286216735031</altitude>
+            <mac>cf:b9:9c:bb:4f:a4</mac>
+            <ipv4>30.23.34.16</ipv4>
+            <ipv6>c096:d7a9:8808:de4a:6611:b131:2884:4f24</ipv6>
+            <firmware>6.1.3</firmware>
+            <positionY>299613.0916038111</positionY>
+            <positionX>174925.68697182296</positionX>
+            <altitude>4217.276730068324</altitude>
         </drone>
         <drone>
-            <serialNumber>SN-j4kYj1WKpA</serialNumber>
+            <serialNumber>SN-GtCNnVqmUm</serialNumber>
+            <model>HRP-DRP 1 Pro</model>
+            <manufacturer>ProDröne Ltd</manufacturer>
+            <mac>a0:42:9e:79:54:72</mac>
+            <ipv4>29.135.20.248</ipv4>
+            <ipv6>6048:b18d:70fb:17a3:93d0:a64c:8561:d0ff</ipv6>
+            <firmware>8.5.4</firmware>
+            <positionY>250687.8076655343</positionY>
+            <positionX>302911.1799293411</positionX>
+            <altitude>4107.748297158524</altitude>
+        </drone>
+        <drone>
+            <serialNumber>SN-fg6obyIrhP</serialNumber>
+            <model>Mosquito</model>
+            <manufacturer>MegaBuzzer Corp</manufacturer>
+            <mac>14:bd:64:a8:c7:f3</mac>
+            <ipv4>126.51.89.70</ipv4>
+            <ipv6>6f87:ad57:bc50:7f69:0bd8:8dd5:c5ec:500e</ipv6>
+            <firmware>8.1.3</firmware>
+            <positionY>76507.02218853784</positionY>
+            <positionX>36519.68131145007</positionX>
+            <altitude>4911.137911160647</altitude>
+        </drone>
+        <drone>
+            <serialNumber>SN-mMTaoxpDKC</serialNumber>
             <model>Altitude X</model>
             <manufacturer>DroneGoat Inc</manufacturer>
-            <mac>47:b6:c8:cb:d0:4f</mac>
-            <ipv4>151.252.174.1</ipv4>
-            <ipv6>78ab:e84a:b45b:e568:88d2:3425:0f94:8d8f</ipv6>
-            <firmware>1.0.5</firmware>
-            <positionY>227710.00862453756</positionY>
-            <positionX>397075.8907163904</positionX>
-            <altitude>4993.9572432070345</altitude>
+            <mac>a2:d4:6c:34:91:b7</mac>
+            <ipv4>247.32.218.240</ipv4>
+            <ipv6>f554:fdae:4267:1433:0b05:e8b8:30d5:5924</ipv6>
+            <firmware>3.0.5</firmware>
+            <positionY>358957.2574766663</positionY>
+            <positionX>324429.167135806</positionX>
+            <altitude>4561.524568630108</altitude>
         </drone>
         <drone>
-            <serialNumber>SN-1gbtwtizml</serialNumber>
+            <serialNumber>SN-JWZqrU7NuB</serialNumber>
             <model>Falcon</model>
             <manufacturer>MegaBuzzer Corp</manufacturer>
-            <mac>63:02:e3:0c:10:41</mac>
-            <ipv4>152.122.153.214</ipv4>
-            <ipv6>b0ee:d630:a177:2b8a:73ad:95c5:a904:3cf6</ipv6>
-            <firmware>5.1.9</firmware>
-            <positionY>373213.109575164</positionY>
-            <positionX>347293.322675679</positionX>
-            <altitude>4384.742672560882</altitude>
-        </drone>
-        <drone>
-            <serialNumber>SN-ojYZI1cCmP</serialNumber>
-            <model>Altitude X</model>
-            <manufacturer>DroneGoat Inc</manufacturer>
-            <mac>71:62:0d:b4:cb:a7</mac>
-            <ipv4>223.12.216.46</ipv4>
-            <ipv6>7ab4:c12b:c5e8:2a7c:897b:1f72:7b54:d0c8</ipv6>
-            <firmware>8.7.9</firmware>
-            <positionY>215373.32437130602</positionY>
-            <positionX>212063.90208073566</positionX>
-            <altitude>4806.284823639352</altitude>
-        </drone>
-        <drone>
-            <serialNumber>SN-dy5U3_A26W</serialNumber>
-            <model>Falcon</model>
-            <manufacturer>MegaBuzzer Corp</manufacturer>
-            <mac>3d:91:df:77:9f:f6</mac>
-            <ipv4>134.62.197.239</ipv4>
-            <ipv6>81a7:5758:1696:9971:f19a:0e3f:9dcc:fce2</ipv6>
-            <firmware>0.8.4</firmware>
-            <positionY>185744.24914227886</positionY>
-            <positionX>16655.620887368423</positionX>
-            <altitude>4551.358000002965</altitude>
+            <mac>1f:84:c1:47:9f:a7</mac>
+            <ipv4>62.78.151.159</ipv4>
+            <ipv6>aab2:de7a:19e4:74f8:26a9:6e02:2777:9beb</ipv6>
+            <firmware>3.4.8</firmware>
+            <positionY>316687.59936894197</positionY>
+            <positionX>79529.32630034437</positionX>
+            <altitude>4665.756082596157</altitude>
         </drone>
     </capture>
 </report>

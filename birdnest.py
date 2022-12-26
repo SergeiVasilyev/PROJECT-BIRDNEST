@@ -3,6 +3,8 @@ import requests
 import xml.etree.ElementTree as ET
 import pandas
 import time
+import json
+
 
 class pilot_info:
     def __init__(self, serialNumber):
@@ -16,17 +18,19 @@ class pilot_info:
         self.email = pilot['email']
 
     def parse(self, serialNumber):
-        headers = {'Accept': 'application/json'}
-        x = requests.get(f'http://assignments.reaktor.com/birdnest/pilots/{serialNumber}', headers=headers)
-        responseJSON = x.json()
+        # headers = {'Accept': 'application/json'}
+        # x = requests.get(f'http://assignments.reaktor.com/birdnest/pilots/{serialNumber}', headers=headers)
+        # responseJSON = x.json()
+        f = open('test_pilot.json')
+        responseJSON = json.load(f)
         return responseJSON
 
 
 class xml_parsre:
     def __init__(self):
-        x = requests.get('http://assignments.reaktor.com/birdnest/drones')
-        root = ET.fromstring(x.content) # Read from string
-        # root = ET.parse('test_2.xml')
+        # x = requests.get('http://assignments.reaktor.com/birdnest/drones')
+        # root = ET.fromstring(x.content) # Read from string
+        root = ET.parse('test.xml')
         self.root = root
         self.drones_list = []
         self.drones_subdic = {}
