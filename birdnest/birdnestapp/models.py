@@ -9,6 +9,7 @@ class PilotData(models.Model):
     phoneNumber = models.CharField(max_length=15, blank=True, null=True)
     createdDt = models.DateField(blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
+    time_added = models.DateTimeField(blank=True, null=True)
     
     def __str__(self):
         return '%s' % (self.pilotId)
@@ -25,6 +26,7 @@ class DroneData(models.Model):
     positionX = models.FloatField()
     altitude = models.FloatField()
     pilot = models.ForeignKey(PilotData, on_delete=models.PROTECT)
+    time_added = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return '%s' % (self.serialNumber)

@@ -1,13 +1,7 @@
 import os
 from django.http import (
     HttpResponse,
-    HttpResponseBadRequest,
-    HttpResponseNotFound,
-    HttpResponseRedirect,
     JsonResponse,
-    StreamingHttpResponse,
-    HttpRequest,
-    QueryDict
 )
 from django.shortcuts import render
 from django.conf import settings
