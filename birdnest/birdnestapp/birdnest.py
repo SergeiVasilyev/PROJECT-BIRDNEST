@@ -1,5 +1,4 @@
 import math
-import os
 import requests
 import xml.etree.ElementTree as ET
 import pandas
@@ -83,15 +82,15 @@ class drone_monitor:
                     get_drones['pilot'] = pilot.__dict__ # add pilot dict in drone dict
                     self.drone_dict[drone['serialNumber']] = get_drones # combine all drones informations
                 except:
-                    pass
+                    print('Failed to get XML or JSON response')
 
         return self.drone_dict
 
-    def drones(self):
-        req = requests.get('http://assignments.reaktor.com/birdnest/drones')
-        root = ET.fromstring(req.content)
-        drones = root
-        return drones
+    # def drones(self):
+    #     req = requests.get('http://assignments.reaktor.com/birdnest/drones')
+    #     root = ET.fromstring(req.content)
+    #     drones = root
+    #     return drones
 
     def is_in_protect_area(self, drn_pos_x, drn_pos_y):
         res = math.sqrt((drn_pos_x - self.center_x_protect_area) ** 2 + (drn_pos_y - self.center_y_protect_area) ** 2)
@@ -102,17 +101,14 @@ class drone_monitor:
 
 
 
-
-
 def main():
     sqliteConnection = create_connection('db.sqlite3')
     cursor = sqliteConnection.cursor()
-    print("Database created and Successfully Connected to SQLite")
     
     combine_list = []
     monitor = drone_monitor()
     drones_in_NDZ = monitor.monitor_main()
-    print(drones_in_NDZ)
+    # print(drones_in_NDZ)
     for key, drone in drones_in_NDZ.items():
         list_of_drones_NDZ = {}
         # print(key, drone)
@@ -133,92 +129,81 @@ def main():
         combine_list.append(list_of_drones_NDZ)
 
 
+        try:
+            with sqliteConnection:
+                res = sqliteConnection.execute("SELECT * FROM birdnestapp_pilotdata WHERE pilotId=?", (drone['pilot']['pilotId'], ))
+                get_one = res.fetchone()
 
-        with sqliteConnection:
-            res = sqliteConnection.execute("SELECT * FROM birdnestapp_pilotdata WHERE pilotId=?", (drone['pilot']['pilotId'], ))
-            get_one = res.fetchone()
-            print(get_one)
-            time_now = datetime.now()
-            if get_one == None:
-                pilot_task = (drone['pilot']['pilotId'], drone['pilot']['firstName'], drone['pilot']['lastName'], drone['pilot']['phoneNumber'], drone['pilot']['createdDt'], drone['pilot']['email'], time_now)
-                sql_pilot = '''INSERT INTO birdnestapp_pilotdata (pilotId, firstName, lastName, phoneNumber, createdDt, email, time_added) VALUES (?, ?, ?, ?, ?, ?, ?)'''
-                cursor.execute(sql_pilot, pilot_task)
+                time_now = datetime.now()
+                if get_one == None:
+                    pilot_task = (drone['pilot']['pilotId'], drone['pilot']['firstName'], drone['pilot']['lastName'], drone['pilot']['phoneNumber'], drone['pilot']['createdDt'], drone['pilot']['email'], time_now)
+                    sql_pilot = '''INSERT INTO birdnestapp_pilotdata (pilotId, firstName, lastName, phoneNumber, createdDt, email, time_added) VALUES (?, ?, ?, ?, ?, ?, ?)'''
+                    cursor.execute(sql_pilot, pilot_task)
+                    pilot_id = cursor.lastrowid
 
-                pilot_id = cursor.lastrowid
-                print('cursor.lastrowid', cursor.lastrowid)
-            else:
-                pilot_id = get_one[0]
-                print('pilot_id', pilot_id)
+                else:
+                    pilot_id = get_one[0]
 
+                drone_task = (drone['serialNumber'], drone['model'], drone['manufacturer'], drone['mac'], drone['ipv4'], drone['ipv6'], drone['firmware'], drone['positionY'], drone['positionX'], drone['altitude'], pilot_id, time_now)
+                sql_drone = '''INSERT INTO birdnestapp_dronedata (serialNumber, model, manufacturer, mac, ipv4, ipv6, firmware, positionY, positionX, altitude, pilot_id, time_added) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+                cursor.execute(sql_drone, drone_task)
+                sqliteConnection.commit()
 
-            drone_task = (drone['serialNumber'], drone['model'], drone['manufacturer'], drone['mac'], drone['ipv4'], drone['ipv6'], drone['firmware'], drone['positionY'], drone['positionX'], drone['altitude'], pilot_id, time_now)
-            sql_drone = '''INSERT INTO birdnestapp_dronedata (serialNumber, model, manufacturer, mac, ipv4, ipv6, firmware, positionY, positionX, altitude, pilot_id, time_added) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
-            cursor.execute(sql_drone, drone_task)
+        except sqlite3.Error as e:
+            print(e)
 
-            sqliteConnection.commit()
+        finally:
+            if sqliteConnection:
+                sqliteConnection.close()
+                # print("The SQLite connection is closed")
 
-
-
-    if sqliteConnection:
-        sqliteConnection.close()
-        print("The SQLite connection is closed")
-
-
-    print(combine_list)    
+    # print(combine_list)
     if combine_list:
         print(pandas.DataFrame(combine_list))
         
 
 def create_connection(db_file):
-    """ create a database connection to the SQLite database
-        specified by db_file
-    :param db_file: database file
-    :return: Connection object or None
-    """
     conn = None
     try:
         conn = sqlite3.connect(db_file)
     except sqlite3.Error as e:
         print(e)
-
     return conn
 
-def delete_rows(now, timeDelta):
-    print('TIME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+def delete_rows(timeDelta):
+    print('TIME TO DELETE OLD ROWS')
     sqliteConnection = create_connection('db.sqlite3')
     sqliteConnection.execute("PRAGMA foreign_keys = ON")
     cursor = sqliteConnection.cursor()
     try:
         with sqliteConnection:
             sql_drone = 'DELETE FROM birdnestapp_dronedata WHERE time_added<?'
-            cursor.execute(sql_drone, (now - timedelta(seconds = 20),))
+            cursor.execute(sql_drone, (timeDelta,))
 
             sql_pilot = 'DELETE FROM birdnestapp_pilotdata WHERE time_added<?'
-            cursor.execute(sql_pilot, (now - timedelta(seconds = 20),))
+            cursor.execute(sql_pilot, (timeDelta,))
 
             sqliteConnection.commit()
     except sqlite3.Error as e:
         print(e)
-        print('ERROR!!!!!!!!!!!!!!!!!!!!!!!!!')
 
     finally:
         if sqliteConnection:
             sqliteConnection.close()
-            print("The SQLite connection is closed")
+            # print("The SQLite connection is closed")
 
 
 if __name__ == "__main__":
     now = datetime.now()
-    now_plus_10 = now + timedelta(seconds = 20)
-    print(now, now_plus_10)
-    # time_start = now.strftime("%H:%M:%S")
+    td = timedelta(minutes = 10)
+    # td = timedelta(seconds = 20)
+    now_plus_10 = now + td
     while True:
         now = datetime.now()
         main()
         if now >= now_plus_10:
-            delete_rows(now, now_plus_10)
-            now_plus_10 = now + timedelta(seconds = 20)
-            print(now, now_plus_10)
+            delete_rows(now - td)
+            now_plus_10 = now + td
         time.sleep(2)
 
 
