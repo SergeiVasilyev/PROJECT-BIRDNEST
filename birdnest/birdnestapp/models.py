@@ -7,7 +7,7 @@ class PilotData(models.Model):
     firstName = models.CharField(max_length=20, blank=True, null=True)
     lastName = models.CharField(max_length=20, blank=True, null=True)
     phoneNumber = models.CharField(max_length=15, blank=True, null=True)
-    createdDt = models.DateField(blank=True, null=True)
+    createdDt = models.DateTimeField(blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     time_added = models.DateTimeField(blank=True, null=True)
     
@@ -25,7 +25,7 @@ class DroneData(models.Model):
     positionY = models.FloatField()
     positionX = models.FloatField()
     altitude = models.FloatField()
-    pilot = models.ForeignKey(PilotData, on_delete=models.PROTECT)
+    pilot = models.ForeignKey(PilotData, related_name='pilot', on_delete=models.PROTECT)
     time_added = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):

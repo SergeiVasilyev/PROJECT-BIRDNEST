@@ -19,10 +19,11 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from birdnestapp.views import main
+from birdnestapp.views import *
 # from birdnestapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', main, name="main"),
+    path('update_data/', update_data, name="update_data"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -129,33 +129,28 @@ def main():
         combine_list.append(list_of_drones_NDZ)
 
 
-        try:
-            with sqliteConnection:
-                res = sqliteConnection.execute("SELECT * FROM birdnestapp_pilotdata WHERE pilotId=?", (drone['pilot']['pilotId'], ))
-                get_one = res.fetchone()
+        with sqliteConnection:
+            res = sqliteConnection.execute("SELECT * FROM birdnestapp_pilotdata WHERE pilotId=?", (drone['pilot']['pilotId'], ))
+            get_one = res.fetchone()
 
-                time_now = datetime.now()
-                if get_one == None:
-                    pilot_task = (drone['pilot']['pilotId'], drone['pilot']['firstName'], drone['pilot']['lastName'], drone['pilot']['phoneNumber'], drone['pilot']['createdDt'], drone['pilot']['email'], time_now)
-                    sql_pilot = '''INSERT INTO birdnestapp_pilotdata (pilotId, firstName, lastName, phoneNumber, createdDt, email, time_added) VALUES (?, ?, ?, ?, ?, ?, ?)'''
-                    cursor.execute(sql_pilot, pilot_task)
-                    pilot_id = cursor.lastrowid
+            time_now = datetime.now()
+            if get_one == None:
+                pilot_task = (drone['pilot']['pilotId'], drone['pilot']['firstName'], drone['pilot']['lastName'], drone['pilot']['phoneNumber'], drone['pilot']['createdDt'], drone['pilot']['email'], time_now)
+                sql_pilot = '''INSERT INTO birdnestapp_pilotdata (pilotId, firstName, lastName, phoneNumber, createdDt, email, time_added) VALUES (?, ?, ?, ?, ?, ?, ?)'''
+                cursor.execute(sql_pilot, pilot_task)
+                pilot_id = cursor.lastrowid
 
-                else:
-                    pilot_id = get_one[0]
+            else:
+                pilot_id = get_one[0]
 
-                drone_task = (drone['serialNumber'], drone['model'], drone['manufacturer'], drone['mac'], drone['ipv4'], drone['ipv6'], drone['firmware'], drone['positionY'], drone['positionX'], drone['altitude'], pilot_id, time_now)
-                sql_drone = '''INSERT INTO birdnestapp_dronedata (serialNumber, model, manufacturer, mac, ipv4, ipv6, firmware, positionY, positionX, altitude, pilot_id, time_added) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
-                cursor.execute(sql_drone, drone_task)
-                sqliteConnection.commit()
+            drone_task = (drone['serialNumber'], drone['model'], drone['manufacturer'], drone['mac'], drone['ipv4'], drone['ipv6'], drone['firmware'], drone['positionY'], drone['positionX'], drone['altitude'], pilot_id, time_now)
+            sql_drone = '''INSERT INTO birdnestapp_dronedata (serialNumber, model, manufacturer, mac, ipv4, ipv6, firmware, positionY, positionX, altitude, pilot_id, time_added) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+            cursor.execute(sql_drone, drone_task)
+            sqliteConnection.commit()
 
-        except sqlite3.Error as e:
-            print(e)
-
-        finally:
-            if sqliteConnection:
-                sqliteConnection.close()
-                # print("The SQLite connection is closed")
+    if sqliteConnection:
+        sqliteConnection.close()
+        # print("The SQLite connection is closed")
 
     # print(combine_list)
     if combine_list:
