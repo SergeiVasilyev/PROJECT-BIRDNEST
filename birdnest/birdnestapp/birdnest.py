@@ -60,6 +60,7 @@ class xml_parsre:
             self.drones_subdic = {}
 
         self.device_report['drone_list'] = self.drones_list
+        print(self.device_report)
         return self.device_report
 
 
@@ -71,8 +72,16 @@ class drone_monitor:
         get_xml = xml_parsre()
         self.drones_report = get_xml.drones()
         self.drone_dict = {}
+        self.device_dict = {}
 
     def monitor_main(self):
+        self.device_dict['deviceId'] = self.drones_report['deviceId']
+        self.device_dict['listenRange'] = self.drones_report['listenRange']
+        self.device_dict['deviceStarted'] = self.drones_report['deviceStarted']
+        self.device_dict['uptimeSeconds'] = self.drones_report['uptimeSeconds']
+        self.device_dict['updateIntervalMs'] = self.drones_report['updateIntervalMs']
+        self.device_dict['snapshotTimestamp'] = self.drones_report['snapshotTimestamp']
+
         for drone in self.drones_report['drone_list']:
             if self.is_in_protect_area(float(drone['positionX']), float(drone['positionY'])):
                 get_drones = {}
@@ -80,17 +89,13 @@ class drone_monitor:
                     pilot = pilot_info(drone['serialNumber']) # Get pilot info as object from httprequest
                     get_drones = drone # Copy drone to dict
                     get_drones['pilot'] = pilot.__dict__ # add pilot dict in drone dict
+                    get_drones['device'] = self.device_dict
                     self.drone_dict[drone['serialNumber']] = get_drones # combine all drones informations
                 except:
                     print('Failed to get XML or JSON response')
 
+        print('self.drone_dict', self.drone_dict)
         return self.drone_dict
-
-    # def drones(self):
-    #     req = requests.get('http://assignments.reaktor.com/birdnest/drones')
-    #     root = ET.fromstring(req.content)
-    #     drones = root
-    #     return drones
 
     def is_in_protect_area(self, drn_pos_x, drn_pos_y):
         res = math.sqrt((drn_pos_x - self.center_x_protect_area) ** 2 + (drn_pos_y - self.center_y_protect_area) ** 2)
@@ -124,27 +129,39 @@ def main():
         list_of_drones_NDZ['pilot last name'] = drone['pilot']['lastName']
         # list_of_drones_NDZ['pilot phone number'] = drone['pilot']['phoneNumber']
         # list_of_drones_NDZ['pilot createdDt'] = drone['pilot']['createdDt']
-        list_of_drones_NDZ['pilot email'] = drone['pilot']['email']
+        # list_of_drones_NDZ['pilot email'] = drone['pilot']['email']
+        list_of_drones_NDZ['deviceId'] = drone['device']['deviceId']
+
 
         combine_list.append(list_of_drones_NDZ)
 
 
         with sqliteConnection:
+            res = sqliteConnection.execute("SELECT * FROM birdnestapp_dronescannerinfo WHERE deviceId=?", (drone['device']['deviceId'], ))
+            get_one_device = res.fetchone()
+            time_now = datetime.now()
+
+            if get_one_device == None:
+                device_task = (drone['device']['deviceId'], drone['device']['listenRange'], drone['device']['deviceStarted'], drone['device']['uptimeSeconds'], drone['device']['updateIntervalMs'], time_now)
+                sql_device = '''INSERT INTO birdnestapp_dronescannerinfo (deviceId, listenRange, deviceStarted, uptimeSeconds, updateIntervalMs, time_added) VALUES (?, ?, ?, ?, ?, ?)'''
+                cursor.execute(sql_device, device_task)
+                device_id = cursor.lastrowid
+            else:
+                device_id = get_one_device[0]
+
             res = sqliteConnection.execute("SELECT * FROM birdnestapp_pilotdata WHERE pilotId=?", (drone['pilot']['pilotId'], ))
             get_one = res.fetchone()
 
-            time_now = datetime.now()
             if get_one == None:
                 pilot_task = (drone['pilot']['pilotId'], drone['pilot']['firstName'], drone['pilot']['lastName'], drone['pilot']['phoneNumber'], drone['pilot']['createdDt'], drone['pilot']['email'], time_now)
                 sql_pilot = '''INSERT INTO birdnestapp_pilotdata (pilotId, firstName, lastName, phoneNumber, createdDt, email, time_added) VALUES (?, ?, ?, ?, ?, ?, ?)'''
                 cursor.execute(sql_pilot, pilot_task)
                 pilot_id = cursor.lastrowid
-
             else:
                 pilot_id = get_one[0]
 
-            drone_task = (drone['serialNumber'], drone['model'], drone['manufacturer'], drone['mac'], drone['ipv4'], drone['ipv6'], drone['firmware'], drone['positionY'], drone['positionX'], drone['altitude'], pilot_id, time_now)
-            sql_drone = '''INSERT INTO birdnestapp_dronedata (serialNumber, model, manufacturer, mac, ipv4, ipv6, firmware, positionY, positionX, altitude, pilot_id, time_added) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+            drone_task = (drone['serialNumber'], drone['model'], drone['manufacturer'], drone['mac'], drone['ipv4'], drone['ipv6'], drone['firmware'], drone['positionY'], drone['positionX'], drone['altitude'], pilot_id, time_now, drone['device']['snapshotTimestamp'], device_id)
+            sql_drone = '''INSERT INTO birdnestapp_dronedata (serialNumber, model, manufacturer, mac, ipv4, ipv6, firmware, positionY, positionX, altitude, pilot_id, time_added, snapshotTimestamp, device_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
             cursor.execute(sql_drone, drone_task)
             sqliteConnection.commit()
 
@@ -190,8 +207,8 @@ def delete_rows(timeDelta):
 
 if __name__ == "__main__":
     now = datetime.now()
-    td = timedelta(minutes = 10)
-    # td = timedelta(seconds = 20)
+    # td = timedelta(minutes = 10)
+    td = timedelta(seconds = 20)
     now_plus_10 = now + td
     while True:
         now = datetime.now()

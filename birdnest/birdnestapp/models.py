@@ -27,7 +27,19 @@ class DroneData(models.Model):
     altitude = models.FloatField()
     pilot = models.ForeignKey(PilotData, related_name='pilot', on_delete=models.PROTECT)
     time_added = models.DateTimeField(blank=True, null=True)
+    snapshotTimestamp = models.DateTimeField(blank=True, null=True)
+    device = models.ForeignKey(PilotData, related_name='device', on_delete=models.PROTECT, blank=True, null=True)
+
 
     def __str__(self):
         return '%s' % (self.serialNumber)
 
+class DroneScannerInfo(models.Model):
+    deviceId = models.CharField(max_length=50)
+    listenRange = models.FloatField()
+    deviceStarted = models.DateTimeField(blank=True, null=True)
+    uptimeSeconds = models.IntegerField()
+    updateIntervalMs = models.IntegerField()
+    time_added = models.DateTimeField(blank=True, null=True)
+    def __str__(self):
+        return '%s' % (self.deviceId)

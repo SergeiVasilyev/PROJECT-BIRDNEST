@@ -61,6 +61,11 @@ menu {
     padding-left: 0;
 }
 
+.navbar-brand > span{
+    font-family: 'Indie Flower', cursive;
+    font-size: 1.3em;
+}
+
 
 @media (max-width: 990px) {
     .list {
