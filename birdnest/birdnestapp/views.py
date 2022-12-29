@@ -14,8 +14,10 @@ def main(request):
     # drones_in_NDZ = monitor.monitor_main()
     drones_in_NDZ = DroneData.objects.all().order_by('-id')
     # print(drones_in_NDZ.first().id)
-    last_item_id = drones_in_NDZ.first().id
-
+    try:
+        last_item_id = drones_in_NDZ.first().id
+    except:
+        last_item_id = None
 
     return render(request, 'birdnest/index.html', {'drones_in_NDZ': drones_in_NDZ, 'last_item_id': last_item_id})
     # return render(request, 'birdnest/index.html', {'drones_in_NDZ': drones_in_NDZ})
@@ -23,7 +25,7 @@ def main(request):
 
 def update_data(request):
     json_response = []
-    print(request.GET.get('last_item_id'))
+    # print(request.GET.get('last_item_id'))
     last_item_id = int(request.GET.get('last_item_id'))
     drones_in_NDZ = DroneData.objects.filter(id__gt=last_item_id).order_by('-id')
     try:
@@ -49,3 +51,18 @@ def update_data(request):
         }
         json_response.append(item)
     return JsonResponse({'drones_in_NDZ': json_response, 'last_item_id': last_item_id})
+
+
+
+def droneInfo(request, idx):
+    try:
+        drone = DroneData.objects.get(id=idx)
+    except:
+        print(f'Drone with id: ${idx} not found')
+        drone = {}
+    finally:
+        context = {'drone': drone}
+    return render(request, 'birdnest/drone_info.html', context)
+
+
+

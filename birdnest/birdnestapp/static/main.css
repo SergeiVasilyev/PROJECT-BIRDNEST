@@ -1,10 +1,31 @@
 body{
     font-family: rubik;
     background-color: #ebedf3;
+    /* background-color: #5296be; */
+    /* background-color: #ae2a2a; */
 }
 
-article{
-    
+h3{
+    /* text-align: center; */
+}
+
+.device_wrap{
+    display: flex;
+    justify-content: space-between;
+}
+
+.device_info{
+    /* min-width: 450px; */
+    margin-top: 3em;
+}
+.device_info div > *{
+    margin-bottom: 0;
+}
+.field_name{
+    font-size: 1em;
+    font-weight: 400;
+    color: #718096;
+    margin-bottom: 0;
 }
 
 .list, .columns{
@@ -25,6 +46,7 @@ article{
     border-radius: 0.3rem;
     border: 0.5px solid #d3dded;
     background-color: white; 
+    gap: 1em;
 }
 
 .list div{
@@ -64,6 +86,10 @@ menu {
 .navbar-brand > span{
     font-family: 'Indie Flower', cursive;
     font-size: 1.3em;
+}
+
+a, a:hover, a:visited {
+    text-decoration: none;
 }
 
 

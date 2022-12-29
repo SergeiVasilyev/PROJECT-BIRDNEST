@@ -26,4 +26,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', main, name="main"),
     path('update_data/', update_data, name="update_data"),
+    path('drone_info/<int:idx>/', droneInfo, name="droneInfo"),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
