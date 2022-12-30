@@ -26,7 +26,8 @@ def main(request):
 def update_data(request):
     json_response = []
     # print(request.GET.get('last_item_id'))
-    last_item_id = int(request.GET.get('last_item_id'))
+    # TODO Check this when db is empty
+    last_item_id = int(request.GET.get('last_item_id')) if request.GET.get('last_item_id') != None else 0
     drones_in_NDZ = DroneData.objects.filter(id__gt=last_item_id).order_by('-id')
     try:
         last_item_id = {'last_item_id': drones_in_NDZ.first().id}

@@ -16,12 +16,23 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
+			CanvasJS.addColorSet("greenShades",
+                [
+				"#4467c7",
+				"#9b4c88",
+                "#03b683",
+                "#008080",
+                "#2E8B57",
+                "#3CB371",
+                "#90EE90"                
+                ]);
 			var chart = new CanvasJS.Chart("chartContainer", {
 				animationEnabled: true,
 				animationDuration: 300,
 				// title:{
 				// 	text: "Fertility Rate vs Life Expectancy in Different Countries - 2015"
 				// },
+				colorSet:  "greenShades",
 				backgroundColor: "#ebedf3",
 				axisX: {
 					// title:"Life Expectancy (in Years)",
@@ -41,15 +52,15 @@
 					maximum: 500,
 					viewportMinimum: 0,
 					viewportMaximum: 500,
-					gridThickness: 0.8
+					gridThickness: 0.8,
 				},
 				legend:{
 					horizontalAlign: "left"
 				},
 				data: [{
 					type: "scatter",
-					markerSize: 20,
-					markerColor: "#5296be",
+					markerSize: 12,
+					// markerColor: "#5296be",
 					// showInLegend: true,
 					// legendText: "Size of Bubble Represents Population in Millions",
 					legendMarkerType: "circle",
@@ -57,29 +68,37 @@
 					toolTipContent: "<b>{name}</b><br/>X position: {x}<br/> Y position: {y}",
 					dataPoints: [
 						{ x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a", },
+						{ x: 250, y: 250, markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5 },
 						// { x: 299.613, y: 174.925, name: "SN-lNG2dqzo63" },
 						// { x: 100, y: 100, name: "SN-fg6obyIrhP" },
 						// { x: 150, y: 300, name: "SN-mMTaoxpDKC" },
 
 					]
-				}]
+				},
+				]
 			});
 			chart.render();
 			
 			const render_drone = (drones) => {
+				chart.options.data[0].dataPoints = []
+				chart.options.data[0].dataPoints[0] = {x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a", }
+				chart.options.data[0].dataPoints[1] = { x: 250, y: 250, markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5 }
 				// console.log(chart.options.data[0].dataPoints.length)
 				// chart.options.data[0].dataPoints[1] = {x: 0, y: 0}
-				// chart.render()
 				// console.log(drones)
 				// console.log(drones.responseJSON.drones_in_NDZ)
 				drones.responseJSON.drones_in_NDZ.forEach((drone, idx) => {
-					x = parseFloat(drone.positionX) / 1000
-					y = parseFloat(drone.positionY) / 1000
+					x = parseInt(drone.positionX) / 1000
+					y = parseInt(drone.positionY) / 1000
 					console.log('idx ', idx)
-					chart.options.data[0].dataPoints[0] = {x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a",}
-					chart.options.data[0].dataPoints[idx+1] = {x: x, y: y}
-					chart.render()
+					console.log('x ', x, 'y', y)
+					chart.options.data[0].dataPoints[0] = {x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a", }
+					chart.options.data[0].dataPoints[1] = { x: 250, y: 250, markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5 }
+					chart.options.data[0].dataPoints[idx+2] = {x: x, y: y, name: drone.serialNumber, }
+					
 				})
+				chart.render()
+				console.log('Length ', chart.options.data[0].dataPoints.length)
 			}
 
 			// AJAX get drone data
@@ -192,7 +211,7 @@
 						<span class="field_name">{{drones_in_NDZ.0.device.updateIntervalMs}} ms</span>
 					</div>
 				</div>
-				<div id="chartContainer" style="height: 370px; width: 500px;"></div>
+				<div id="chartContainer" style="height: 500px; width: 500px;"></div>
 			</div>
 
             <div class="columns mt-5">
