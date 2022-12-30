@@ -60,15 +60,15 @@ class xml_parsre:
             self.drones_subdic = {}
 
         self.device_report['drone_list'] = self.drones_list
-        print(self.device_report)
+        # print(self.device_report)
         return self.device_report
 
 
 class drone_monitor:
     def __init__(self):
-        self.radius_protect_area = 100000
-        self.center_x_protect_area = 250000
-        self.center_y_protect_area = 250000
+        self.radius_protect_area = 100000 # Set a protect area
+        self.center_x_protect_area = 250000 # Set X point of protect area
+        self.center_y_protect_area = 250000 # Set Y point of protect area
         get_xml = xml_parsre()
         self.drones_report = get_xml.drones()
         self.drone_dict = {}
@@ -94,7 +94,7 @@ class drone_monitor:
                 except:
                     print('Failed to get XML or JSON response')
 
-        print('self.drone_dict', self.drone_dict)
+        # print('self.drone_dict', self.drone_dict)
         return self.drone_dict
 
     def is_in_protect_area(self, drn_pos_x, drn_pos_y):
@@ -113,29 +113,27 @@ def main():
     combine_list = []
     monitor = drone_monitor()
     drones_in_NDZ = monitor.monitor_main()
-    # print(drones_in_NDZ)
-    for key, drone in drones_in_NDZ.items():
-        list_of_drones_NDZ = {}
-        # print(key, drone)
+
+    for key, drone in drones_in_NDZ.items(): 
+        list_of_drones_NDZ = {} # Create list for pandas
         # print(drone['serialNumber'])
         # print(drone['pilot']['pilotId'])
         list_of_drones_NDZ['Drone SN'] = drone['serialNumber']
         list_of_drones_NDZ['Drone model'] = drone['model']
-        list_of_drones_NDZ['Drone mac'] = drone['mac']
+        # list_of_drones_NDZ['Drone mac'] = drone['mac']
         list_of_drones_NDZ['Drone positionX'] = drone['positionX']
         list_of_drones_NDZ['Drone positionY'] = drone['positionY']
         list_of_drones_NDZ['pilot Id'] = drone['pilot']['pilotId']
-        list_of_drones_NDZ['pilot first name'] = drone['pilot']['firstName']
-        list_of_drones_NDZ['pilot last name'] = drone['pilot']['lastName']
-        # list_of_drones_NDZ['pilot phone number'] = drone['pilot']['phoneNumber']
-        # list_of_drones_NDZ['pilot createdDt'] = drone['pilot']['createdDt']
-        # list_of_drones_NDZ['pilot email'] = drone['pilot']['email']
-        list_of_drones_NDZ['deviceId'] = drone['device']['deviceId']
+        list_of_drones_NDZ['first name'] = drone['pilot']['firstName']
+        list_of_drones_NDZ['last name'] = drone['pilot']['lastName']
+        # list_of_drones_NDZ['phone number'] = drone['pilot']['phoneNumber']
+        # list_of_drones_NDZ['createdDt'] = drone['pilot']['createdDt']
+        # list_of_drones_NDZ['email'] = drone['pilot']['email']
+        # list_of_drones_NDZ['deviceId'] = drone['device']['deviceId']
 
+        combine_list.append(list_of_drones_NDZ) 
 
-        combine_list.append(list_of_drones_NDZ)
-
-
+        # Append data to SQLite
         with sqliteConnection:
             res = sqliteConnection.execute("SELECT * FROM birdnestapp_dronescannerinfo WHERE deviceId=?", (drone['device']['deviceId'], ))
             get_one_device = res.fetchone()
@@ -183,6 +181,7 @@ def create_connection(db_file):
     return conn
 
 def delete_rows(timeDelta):
+    # Delete rows created more than <timeDelta> minutes ago
     print('TIME TO DELETE OLD ROWS')
     sqliteConnection = create_connection('db.sqlite3')
     sqliteConnection.execute("PRAGMA foreign_keys = ON")
@@ -198,7 +197,6 @@ def delete_rows(timeDelta):
             sqliteConnection.commit()
     except sqlite3.Error as e:
         print(e)
-
     finally:
         if sqliteConnection:
             sqliteConnection.close()
@@ -207,8 +205,8 @@ def delete_rows(timeDelta):
 
 if __name__ == "__main__":
     now = datetime.now()
-    td = timedelta(minutes = 10)
-    # td = timedelta(seconds = 20)
+    td = timedelta(minutes = 10) # Create timedelta 10 minutes
+    # td = timedelta(seconds = 20) # Create timedelta 20 seconds for tests
     now_plus_10 = now + td
     while True:
         now = datetime.now()
@@ -216,7 +214,7 @@ if __name__ == "__main__":
         if now >= now_plus_10:
             delete_rows(now - td)
             now_plus_10 = now + td
-        time.sleep(2)
+        time.sleep(2) # restart script every 2 secods
 
 
 

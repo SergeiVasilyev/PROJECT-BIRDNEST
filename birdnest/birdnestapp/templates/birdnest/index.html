@@ -30,12 +30,12 @@
 				animationEnabled: true,
 				animationDuration: 300,
 				// title:{
-				// 	text: "Fertility Rate vs Life Expectancy in Different Countries - 2015"
+				// 	text: ""
 				// },
 				colorSet:  "greenShades",
 				backgroundColor: "#ebedf3",
 				axisX: {
-					// title:"Life Expectancy (in Years)",
+					// title:"",
 					minimum: 0,
 					maximum: 500,
 					viewportMinimum: 0,
@@ -46,7 +46,7 @@
 					
 				},
 				axisY: {
-					// title:"Fertility Rate",
+					// title:"",
 					// includeZero: true,
 					minimum: 0,
 					maximum: 500,
@@ -63,17 +63,13 @@
 					markerSize: 12,
 					// markerColor: "#5296be",
 					// showInLegend: true,
-					// legendText: "Size of Bubble Represents Population in Millions",
+					// legendText: "",
 					legendMarkerType: "circle",
 					legendMarkerColor: "grey",
 					toolTipContent: "<b>{name}</b><br/>X position: {x}<br/> Y position: {y}",
 					dataPoints: [
 						{ x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a", },
 						{ x: 250, y: 250, markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, },
-						// { x: 299.613, y: 174.925, name: "SN-lNG2dqzo63" },
-						// { x: 100, y: 100, name: "SN-fg6obyIrhP" },
-						// { x: 150, y: 300, name: "SN-mMTaoxpDKC" },
-
 					]
 				},
 				]
@@ -83,25 +79,27 @@
 			const render_drone = (drones) => {
 				nest = {x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a", }
 				circle = { x: 250, y: 250, markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, }
-				chart.options.data[0].dataPoints = []
-				chart.options.data[0].dataPoints[0] = nest
-				chart.options.data[0].dataPoints[1] = circle
-				// console.log(chart.options.data[0].dataPoints.length)
-				// chart.options.data[0].dataPoints[1] = {x: 0, y: 0}
-				// console.log(drones)
-				// console.log(drones.responseJSON.drones_in_NDZ)
-				drones.responseJSON.drones_in_NDZ.forEach((drone, idx) => {
-					x = parseInt(drone.positionX) / 1000
-					y = parseInt(drone.positionY) / 1000
-					console.log('idx ', idx)
-					console.log('x ', x, 'y', y)
+				// console.log('drones_in_NDZ', drones.responseJSON.drones_in_NDZ.length)
+
+				if (drones.responseJSON.drones_in_NDZ.length != 0) {
+					chart.options.data[0].dataPoints = []
+					drones.responseJSON.drones_in_NDZ.forEach((drone, idx) => {
+						x = parseInt(drone.positionX) / 1000
+						y = parseInt(drone.positionY) / 1000
+						console.log('idx ', idx)
+						console.log('x ', x, 'y', y)
+						chart.options.data[0].dataPoints[0] = nest
+						chart.options.data[0].dataPoints[1] = circle
+						chart.options.data[0].dataPoints[idx+2] = {x: x, y: y, name: drone.serialNumber, }
+					})
+				} else {
+					chart.options.data[0].dataPoints = []
 					chart.options.data[0].dataPoints[0] = nest
 					chart.options.data[0].dataPoints[1] = circle
-					chart.options.data[0].dataPoints[idx+2] = {x: x, y: y, name: drone.serialNumber, }
-					
-				})
+				}
+				
 				chart.render()
-				console.log('Length ', chart.options.data[0].dataPoints.length)
+				// console.log('Length ', chart.options.data[0].dataPoints.length)
 			}
 
 			// AJAX get drone data
@@ -114,7 +112,7 @@
 						'last_item_id': last_item_id
 					},
 					success: (response)=> {
-						console.log(response.drones_in_NDZ)
+						// console.log(response.drones_in_NDZ)
 						last_item_id = response.last_item_id.last_item_id
 						
 						drones = response.drones_in_NDZ
@@ -155,12 +153,8 @@
 			setTimeout(() => {  getDrones('{{last_item_id}}'); }, 2000)
 			
 		})
-
-		
 	</script>
 </head>
-
-<!-- TODO Update data every 2 sec by AJAX -->
 
 <body>
     <main class="container">
@@ -188,8 +182,7 @@
           </nav>
         </menu>
         <article class="mt-5">
-            <!-- <h3>Scanning the no-fly zone</h3> -->
-
+            <h3>Scanning the no-fly zone</h3>
 			<div class="device_wrap">
 				<div class="device_info">
 					<h4>Scanner information</h4>
