@@ -207,8 +207,8 @@ def delete_rows(timeDelta):
 
 if __name__ == "__main__":
     now = datetime.now()
-    # td = timedelta(minutes = 10)
-    td = timedelta(seconds = 20)
+    td = timedelta(minutes = 10)
+    # td = timedelta(seconds = 20)
     now_plus_10 = now + td
     while True:
         now = datetime.now()

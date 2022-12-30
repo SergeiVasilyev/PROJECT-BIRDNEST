@@ -41,7 +41,7 @@
 					viewportMinimum: 0,
 					viewportMaximum: 500,
 					gridThickness: 0.8,
-					margin: 12,
+					margin: 18,
 					interval: 50,
 					
 				},
@@ -53,6 +53,7 @@
 					viewportMinimum: 0,
 					viewportMaximum: 500,
 					gridThickness: 0.8,
+					margin: 1,
 				},
 				legend:{
 					horizontalAlign: "left"
@@ -68,7 +69,7 @@
 					toolTipContent: "<b>{name}</b><br/>X position: {x}<br/> Y position: {y}",
 					dataPoints: [
 						{ x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a", },
-						{ x: 250, y: 250, markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5 },
+						{ x: 250, y: 250, markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, },
 						// { x: 299.613, y: 174.925, name: "SN-lNG2dqzo63" },
 						// { x: 100, y: 100, name: "SN-fg6obyIrhP" },
 						// { x: 150, y: 300, name: "SN-mMTaoxpDKC" },
@@ -80,9 +81,11 @@
 			chart.render();
 			
 			const render_drone = (drones) => {
+				nest = {x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a", }
+				circle = { x: 250, y: 250, markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, }
 				chart.options.data[0].dataPoints = []
-				chart.options.data[0].dataPoints[0] = {x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a", }
-				chart.options.data[0].dataPoints[1] = { x: 250, y: 250, markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5 }
+				chart.options.data[0].dataPoints[0] = nest
+				chart.options.data[0].dataPoints[1] = circle
 				// console.log(chart.options.data[0].dataPoints.length)
 				// chart.options.data[0].dataPoints[1] = {x: 0, y: 0}
 				// console.log(drones)
@@ -92,8 +95,8 @@
 					y = parseInt(drone.positionY) / 1000
 					console.log('idx ', idx)
 					console.log('x ', x, 'y', y)
-					chart.options.data[0].dataPoints[0] = {x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a", }
-					chart.options.data[0].dataPoints[1] = { x: 250, y: 250, markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5 }
+					chart.options.data[0].dataPoints[0] = nest
+					chart.options.data[0].dataPoints[1] = circle
 					chart.options.data[0].dataPoints[idx+2] = {x: x, y: y, name: drone.serialNumber, }
 					
 				})
@@ -177,7 +180,7 @@
 							<a class="nav-link" aria-current="page" href="https://assignments.reaktor.com/birdnest/">About</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">Github</a>
+							<a class="nav-link" href="https://github.com/SergeiVasilyev/PROJECT-BIRDNEST">Github</a>
 						</li>
 						</ul>
 					</div>
