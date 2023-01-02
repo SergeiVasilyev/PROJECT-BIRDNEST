@@ -36,7 +36,11 @@ class pilot_info:
 class xml_parsre:
     def __init__(self):
         x = requests.get('http://assignments.reaktor.com/birdnest/drones')
-        root = ET.fromstring(x.content) # Read from string
+        try:
+            root = ET.fromstring(x.content) # Read from string
+            # root = None
+        except:
+            root = None
         # root = ET.parse('birdnestapp/test.xml') # Read from file
         self.root = root
         self.drones_list = []
@@ -69,32 +73,37 @@ class drone_monitor:
         self.radius_protect_area = 100000 # Set a protect area
         self.center_x_protect_area = 250000 # Set X point of protect area
         self.center_y_protect_area = 250000 # Set Y point of protect area
-        get_xml = xml_parsre()
-        self.drones_report = get_xml.drones()
+        try:
+            get_xml = xml_parsre()
+            self.drones_report = get_xml.drones()
+        except:
+            self.drones_report = None
         self.drone_dict = {}
         self.device_dict = {}
 
     def monitor_main(self):
-        self.device_dict['deviceId'] = self.drones_report['deviceId']
-        self.device_dict['listenRange'] = self.drones_report['listenRange']
-        self.device_dict['deviceStarted'] = self.drones_report['deviceStarted']
-        self.device_dict['uptimeSeconds'] = self.drones_report['uptimeSeconds']
-        self.device_dict['updateIntervalMs'] = self.drones_report['updateIntervalMs']
-        self.device_dict['snapshotTimestamp'] = self.drones_report['snapshotTimestamp']
+        self.drone_dict = {}
+        if self.drones_report != None:
+            self.device_dict['deviceId'] = self.drones_report['deviceId']
+            self.device_dict['listenRange'] = self.drones_report['listenRange']
+            self.device_dict['deviceStarted'] = self.drones_report['deviceStarted']
+            self.device_dict['uptimeSeconds'] = self.drones_report['uptimeSeconds']
+            self.device_dict['updateIntervalMs'] = self.drones_report['updateIntervalMs']
+            self.device_dict['snapshotTimestamp'] = self.drones_report['snapshotTimestamp']
 
-        for drone in self.drones_report['drone_list']:
-            if self.is_in_protect_area(float(drone['positionX']), float(drone['positionY'])):
-                get_drones = {}
-                try:
-                    pilot = pilot_info(drone['serialNumber']) # Get pilot info as object from httprequest
-                    get_drones = drone # Copy drone to dict
-                    get_drones['pilot'] = pilot.__dict__ # add pilot dict in drone dict
-                    get_drones['device'] = self.device_dict
-                    self.drone_dict[drone['serialNumber']] = get_drones # combine all drones informations
-                except:
-                    print('Failed to get XML or JSON response')
+            for drone in self.drones_report['drone_list']:
+                if self.is_in_protect_area(float(drone['positionX']), float(drone['positionY'])):
+                    get_drones = {}
+                    try:
+                        pilot = pilot_info(drone['serialNumber']) # Get pilot info as object from httprequest
+                        get_drones = drone # Copy drone to dict
+                        get_drones['pilot'] = pilot.__dict__ # add pilot dict in drone dict
+                        get_drones['device'] = self.device_dict
+                        self.drone_dict[drone['serialNumber']] = get_drones # combine all drones informations
+                    except:
+                        print('Failed to get XML or JSON response')
 
-        # print('self.drone_dict', self.drone_dict)
+            # print('self.drone_dict', self.drone_dict)
         return self.drone_dict
 
     def is_in_protect_area(self, drn_pos_x, drn_pos_y):
@@ -107,7 +116,7 @@ class drone_monitor:
 
 
 def main():
-    sqliteConnection = create_connection('birdnest/db.sqlite3')
+    sqliteConnection = create_connection('./birdnest/db.sqlite3')
     cursor = sqliteConnection.cursor()
     
     combine_list = []
@@ -183,7 +192,7 @@ def create_connection(db_file):
 def delete_rows(timeDelta):
     # Delete rows created more than <timeDelta> minutes ago
     print('TIME TO DELETE OLD ROWS')
-    sqliteConnection = create_connection('birdnest/db.sqlite3')
+    sqliteConnection = create_connection('./birdnest/db.sqlite3')
     sqliteConnection.execute("PRAGMA foreign_keys = ON")
     cursor = sqliteConnection.cursor()
     try:
