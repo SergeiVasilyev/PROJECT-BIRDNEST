@@ -6,7 +6,7 @@ from django.http import (
 from django.shortcuts import render
 from django.conf import settings
 from .models import DroneData, PilotData
-from .birdnest import *
+from birdnest import *
 from django.core.paginator import Paginator
 
 def main(request):

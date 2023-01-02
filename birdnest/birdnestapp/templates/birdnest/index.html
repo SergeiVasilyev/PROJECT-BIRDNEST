@@ -12,6 +12,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <title>Birdnest project</title>
 
 	<script type="text/javascript">
@@ -69,7 +70,7 @@
 					toolTipContent: "<b>{name}</b><br/>X position: {x}<br/> Y position: {y}",
 					dataPoints: [
 						{ x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a", },
-						{ x: 250, y: 250, markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, },
+						{ x: 250, y: 250, name: "NDZ", markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, },
 					]
 				},
 				]
@@ -78,7 +79,7 @@
 			
 			const render_drone = (drones) => {
 				nest = {x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a", }
-				circle = { x: 250, y: 250, markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, }
+				circle = { x: 250, y: 250, name: "NDZ", markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, }
 				// console.log('drones_in_NDZ', drones.responseJSON.drones_in_NDZ.length)
 
 				if (drones.responseJSON.drones_in_NDZ.length != 0) {

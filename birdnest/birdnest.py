@@ -26,7 +26,7 @@ class pilot_info:
             headers = {'Accept': 'application/json'}
             x = requests.get(f'http://assignments.reaktor.com/birdnest/pilots/{serialNumber}', headers=headers)
             responseJSON = x.json()
-            # f = open('birdnestapp/test_pilot.json')
+            # f = open('birdnestapp/test_pilot.json') # Read from file
             # responseJSON = json.load(f)
         except:
             responseJSON = None
@@ -37,7 +37,7 @@ class xml_parsre:
     def __init__(self):
         x = requests.get('http://assignments.reaktor.com/birdnest/drones')
         root = ET.fromstring(x.content) # Read from string
-        # root = ET.parse('birdnestapp/test.xml')
+        # root = ET.parse('birdnestapp/test.xml') # Read from file
         self.root = root
         self.drones_list = []
         self.drones_subdic = {}
@@ -107,7 +107,7 @@ class drone_monitor:
 
 
 def main():
-    sqliteConnection = create_connection('db.sqlite3')
+    sqliteConnection = create_connection('birdnest/db.sqlite3')
     cursor = sqliteConnection.cursor()
     
     combine_list = []
@@ -183,7 +183,7 @@ def create_connection(db_file):
 def delete_rows(timeDelta):
     # Delete rows created more than <timeDelta> minutes ago
     print('TIME TO DELETE OLD ROWS')
-    sqliteConnection = create_connection('db.sqlite3')
+    sqliteConnection = create_connection('birdnest/db.sqlite3')
     sqliteConnection.execute("PRAGMA foreign_keys = ON")
     cursor = sqliteConnection.cursor()
     try:
