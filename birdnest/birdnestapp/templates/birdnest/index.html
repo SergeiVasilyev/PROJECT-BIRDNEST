@@ -70,7 +70,7 @@
 					toolTipContent: "<b>{name}</b><br/>X position: {x}<br/> Y position: {y}",
 					dataPoints: [
 						{ x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a", },
-						{ x: 250, y: 250, name: "NDZ", markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, },
+						// { x: 250, y: 250, name: "NDZ", markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, },
 					],
 				},
 				{
@@ -88,13 +88,16 @@
 				},
 				]
 			});
+			chart.options.data[0].dataPoints[1] = { x: 250, y: 250, name: "NDZ", markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, }
 			chart.render();
 			
 			const render_drone = (drones) => {
 				nest = {x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a", }
 				circle = { x: 250, y: 250, name: "NDZ", markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, }
 				// console.log('drones_in_NDZ', drones.responseJSON.drones_in_NDZ.length)
-
+				if ($('#chartContainer').css('width') == '350px') {
+					circle = { x: 250, y: 250, name: "NDZ", markerSize: 120, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, }
+				}
 				if (drones.responseJSON.drones_in_NDZ.length != 0) {
 					chart.options.data[0].dataPoints = []
 					drones.responseJSON.drones_in_NDZ.forEach((drone, idx) => {
@@ -144,7 +147,7 @@
 						drones.slice().reverse().forEach(drone => {
 							// if (parseInt(last_item_id) < drone.id) {
 								$('#list_wrap').prepend(`
-								<a href="/drone_info/${drone.id}%}">
+								<a href="/drone_info/${drone.id}">
 									<div class="list">
 										<div>
 											<p class="bold">${drone.model} ${drone.manufacturer}</p>
@@ -234,7 +237,7 @@
 						<span class="field_name">{{drones_in_NDZ.0.device.updateIntervalMs}} ms</span>
 					</div>
 				</div>
-				<div id="chartContainer" style="height: 500px; width: 500px;"></div>
+				<div id="chartContainer"></div>
 			</div>
 
             <div class="columns mt-5">
