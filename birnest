@@ -1,0 +1,14 @@
+server {
+    listen 8080;
+    server_name 109.204.232.228;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /var/www/PROJECT-BIRDNEST/birdnest;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/gunicorn_birdnest.sock;
+    }
+}

@@ -1,0 +1,17 @@
+[Unit]
+Description=gunicorn birdnest daemon
+Requires=gunicorn_birdnest.socket
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/var/www/PROJECT-BIRDNEST/birdnest
+ExecStart=/var/www/PROJECT-BIRDNEST/venv/bin/gunicorn \
+           --access-logfile - \
+           --workers 3 \
+           --bind unix:/run/gunicorn_birdnest.sock \
+           birdnest.wsgi:application
+
+[Install]
+WantedBy=multi-user.target

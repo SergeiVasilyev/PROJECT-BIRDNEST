@@ -1,0 +1,15 @@
+[Unit]
+Description=Birdnest script is runnig!
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+
+ExecStart=/var/www/PROJECT-BIRDNEST/venv/bin/python /var/www/PROJECT-BIRDNEST/birdnest/birdnestapp/birdnest.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=network.target

@@ -188,6 +188,8 @@ def main():
         
 
 def create_connection(db_file):
+    # p = pathlib.Path(os.path.join(os.path.dirname( __file__ )))
+    # print(p.parent)
     db_file = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'db.sqlite3'))
     conn = None
     try:
@@ -220,10 +222,6 @@ def delete_rows(timeDelta):
 
 
 if __name__ == "__main__":
-    # print(pathlib.Path().resolve())
-    # p = pathlib.Path(os.path.join(os.path.dirname( __file__ )))
-    # print(p.parent)
-    # print(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'db.sqlite3')))
     now = datetime.now()
     td = timedelta(minutes = 10) # Create timedelta 10 minutes
     # td = timedelta(seconds = 20) # Create timedelta 20 seconds for tests

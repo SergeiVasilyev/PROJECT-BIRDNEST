@@ -1,0 +1,9 @@
+[Unit]
+Description=gunicorn birdnest socket
+
+[Socket]
+ListenStream=/run/gunicorn_birdnest.sock
+
+[Install]
+WantedBy=sockets.target
+
