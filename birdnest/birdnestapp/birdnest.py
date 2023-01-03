@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import math
 import requests
 import xml.etree.ElementTree as ET
@@ -7,6 +8,8 @@ from django.conf import settings
 import sqlite3
 import json
 from datetime import datetime, timedelta
+import pathlib
+import os
 
 
 
@@ -116,8 +119,11 @@ class drone_monitor:
 
 
 def main():
-    sqliteConnection = create_connection('./birdnest/db.sqlite3')
-    cursor = sqliteConnection.cursor()
+    sqliteConnection = create_connection('../birdnest/db.sqlite3')
+    try:
+        cursor = sqliteConnection.cursor()
+    except sqlite3.Error as e:
+        print(e)
     
     combine_list = []
     monitor = drone_monitor()
@@ -182,6 +188,7 @@ def main():
         
 
 def create_connection(db_file):
+    db_file = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'db.sqlite3'))
     conn = None
     try:
         conn = sqlite3.connect(db_file)
@@ -192,7 +199,7 @@ def create_connection(db_file):
 def delete_rows(timeDelta):
     # Delete rows created more than <timeDelta> minutes ago
     print('TIME TO DELETE OLD ROWS')
-    sqliteConnection = create_connection('./birdnest/db.sqlite3')
+    sqliteConnection = create_connection('../birdnest/db.sqlite3')
     sqliteConnection.execute("PRAGMA foreign_keys = ON")
     cursor = sqliteConnection.cursor()
     try:
@@ -213,6 +220,10 @@ def delete_rows(timeDelta):
 
 
 if __name__ == "__main__":
+    # print(pathlib.Path().resolve())
+    # p = pathlib.Path(os.path.join(os.path.dirname( __file__ )))
+    # print(p.parent)
+    # print(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'db.sqlite3')))
     now = datetime.now()
     td = timedelta(minutes = 10) # Create timedelta 10 minutes
     # td = timedelta(seconds = 20) # Create timedelta 20 seconds for tests
