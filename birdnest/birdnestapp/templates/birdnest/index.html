@@ -83,7 +83,7 @@
 					legendMarkerColor: "grey",
 					toolTipContent: "<b>{name}</b><br/>X position: {x}<br/> Y position: {y}",
 					dataPoints: [
-						// { x: 100, y: 100, name: "NEST22222", markerSize: 10, markerColor: "#ae2a2a", },
+
 					],
 				},
 				]
@@ -125,7 +125,6 @@
 						chart.options.data[1].dataPoints[idx] = {x: x, y: y, name: drone.serialNumber, markerColor: "green", }
 					})
 				}
-				
 				chart.render()
 				// console.log('Length ', chart.options.data[0].dataPoints.length)
 			}
@@ -145,7 +144,6 @@
 						
 						drones = response.drones_in_NDZ
 						drones.slice().reverse().forEach(drone => {
-							// if (parseInt(last_item_id) < drone.id) {
 								$('#list_wrap').prepend(`
 								<a href="/drone_info/${drone.id}">
 									<div class="list">
@@ -168,8 +166,6 @@
 									</div>
 								</a>			
 								`)
-							// }
-							
 						})
 					},
 					complete: function(drones) {
