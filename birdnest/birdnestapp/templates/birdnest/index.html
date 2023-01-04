@@ -94,13 +94,14 @@
 			const render_drone = (drones) => {
 				nest = {x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a", }
 				circle = { x: 250, y: 250, name: "NDZ", markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, }
-				// console.log('drones_in_NDZ', drones.responseJSON.drones_in_NDZ.length)
+				// console.log('drones_in_NDZ_db', drones.responseJSON.drones_in_NDZ_db.length)
+				console.log(drones.responseJSON.inside_NDZ)
 				if ($('#chartContainer').css('width') == '350px') {
 					circle = { x: 250, y: 250, name: "NDZ", markerSize: 120, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, }
 				}
-				if (drones.responseJSON.drones_in_NDZ.length != 0) {
+				if (drones.responseJSON.inside_NDZ.length != 0) { // if we want to get from data from database use this: drones.responseJSON.drones_in_NDZ_db
 					chart.options.data[0].dataPoints = []
-					drones.responseJSON.drones_in_NDZ.forEach((drone, idx) => {
+					drones.responseJSON.inside_NDZ.forEach((drone, idx) => { // if we want to get from data from database use this: drones.responseJSON.drones_in_NDZ_db
 						x = parseInt(drone.positionX) / 1000
 						y = parseInt(drone.positionY) / 1000
 						console.log('idx ', idx)
@@ -142,7 +143,7 @@
 						// console.log(response)
 						last_item_id = response.last_item_id.last_item_id
 						
-						drones = response.drones_in_NDZ
+						drones = response.drones_in_NDZ_db
 						drones.slice().reverse().forEach(drone => {
 								$('#list_wrap').prepend(`
 								<a href="/drone_info/${drone.id}">
@@ -171,11 +172,11 @@
 					complete: function(drones) {
 						// console.log(drones)
 						render_drone(drones)
-						setTimeout(() => {  getDrones(last_item_id); }, 2000)
+						setTimeout(() => {  getDrones(last_item_id); }, 1800)
 					}
 				})
 			}
-			setTimeout(() => {  getDrones('{{last_item_id}}'); }, 2000)
+			setTimeout(() => {  getDrones('{{last_item_id}}'); }, 1800)
 			
 		})
 	</script>
@@ -214,23 +215,23 @@
 					<h4>Scanner information</h4>
 					<div>
 						<span>Device id: </span>
-						<span class="field_name">{{drones_in_NDZ.0.device.deviceId}}</span>
+						<span class="field_name">{{drones_in_NDZ_db.0.device.deviceId}}</span>
 					</div>
 					<div>
 						<span>Listen range: </span>
-						<span class="field_name">{{drones_in_NDZ.0.device.listenRange}}</span>
+						<span class="field_name">{{drones_in_NDZ_db.0.device.listenRange}}</span>
 					</div>
 					<div>
 						<span>Device started at: </span>
-						<span class="field_name">{{drones_in_NDZ.0.device.deviceStarted|date:'d.m.Y'}}</span>
+						<span class="field_name">{{drones_in_NDZ_db.0.device.deviceStarted|date:'d.m.Y'}}</span>
 					</div>
 					<div>
 						<span>Uptime seconds: </span>
-						<span class="field_name">{{drones_in_NDZ.0.device.uptimeSeconds}}</span>
+						<span class="field_name">{{drones_in_NDZ_db.0.device.uptimeSeconds}}</span>
 					</div>
 					<div>
 						<span>Update interval: </span>
-						<span class="field_name">{{drones_in_NDZ.0.device.updateIntervalMs}} ms</span>
+						<span class="field_name">{{drones_in_NDZ_db.0.device.updateIntervalMs}} ms</span>
 					</div>
 				</div>
 				<div id="chartContainer"></div>
@@ -243,7 +244,7 @@
 				<p>contacts</p>
             </div>
 			<div id="list_wrap">
-				{% for drone in drones_in_NDZ %}
+				{% for drone in drones_in_NDZ_db %}
 				<a href="{% url 'droneInfo' drone.id %}">
 				<div class="list">
 					<div>
