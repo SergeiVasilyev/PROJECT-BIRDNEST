@@ -131,20 +131,13 @@ def main():
 
     for key, drone in drones_in_NDZ.items(): 
         list_of_drones_NDZ = {} # Create list for pandas
-        # print(drone['serialNumber'])
-        # print(drone['pilot']['pilotId'])
         list_of_drones_NDZ['Drone SN'] = drone['serialNumber']
         list_of_drones_NDZ['Drone model'] = drone['model']
-        # list_of_drones_NDZ['Drone mac'] = drone['mac']
         list_of_drones_NDZ['Drone positionX'] = drone['positionX']
         list_of_drones_NDZ['Drone positionY'] = drone['positionY']
         list_of_drones_NDZ['pilot Id'] = drone['pilot']['pilotId']
         list_of_drones_NDZ['first name'] = drone['pilot']['firstName']
         list_of_drones_NDZ['last name'] = drone['pilot']['lastName']
-        # list_of_drones_NDZ['phone number'] = drone['pilot']['phoneNumber']
-        # list_of_drones_NDZ['createdDt'] = drone['pilot']['createdDt']
-        # list_of_drones_NDZ['email'] = drone['pilot']['email']
-        # list_of_drones_NDZ['deviceId'] = drone['device']['deviceId']
 
         combine_list.append(list_of_drones_NDZ) 
 
@@ -224,7 +217,7 @@ def delete_rows(timeDelta):
 if __name__ == "__main__":
     now = datetime.now()
     td = timedelta(minutes = 10) # Create timedelta 10 minutes
-    # td = timedelta(seconds = 20) # Create timedelta 20 seconds for tests
+    # td = timedelta(seconds = 30) # Create timedelta 20 seconds for tests
     now_plus_10 = now + td
     while True:
         now = datetime.now()
@@ -232,7 +225,7 @@ if __name__ == "__main__":
         if now >= now_plus_10:
             delete_rows(now - td)
             now_plus_10 = now + td
-        time.sleep(2) # restart script every 2 secods
+        time.sleep(1.8) # restart script every 2 secods
 
 
 

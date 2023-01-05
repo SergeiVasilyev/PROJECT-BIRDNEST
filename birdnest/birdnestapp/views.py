@@ -10,8 +10,6 @@ from .birdnest import drone_monitor, xml_parsre
 from django.core.paginator import Paginator
 
 def main(request):
-    # monitor = drone_monitor()
-    # drones_in_NDZ = monitor.monitor_main()
     drones_in_NDZ_db = DroneData.objects.all().order_by('-id')
 
     try:
@@ -53,7 +51,6 @@ def update_data(request):
     json_response = []
 
     try:
-        # print(drones_outside_NDZ())
         outside_NDZ = drones_outside_NDZ()
         inside_NDZ = drones_inside_NDZ()
     except:
