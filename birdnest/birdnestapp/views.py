@@ -1,4 +1,3 @@
-import os
 from django.http import (
     HttpResponse,
     JsonResponse,
@@ -7,7 +6,6 @@ from django.shortcuts import render
 from django.conf import settings
 from .models import DroneData, PilotData
 from .birdnest import drone_monitor, xml_parsre
-from django.core.paginator import Paginator
 
 def main(request):
     drones_in_NDZ_db = DroneData.objects.all().order_by('-id')

@@ -3,16 +3,6 @@ body{
     background-color: #ebedf3;
 }
 
-h3{
-    /* text-align: center; */
-    /* color: #9b4c88;
-    color: #4467c7;
-    color: #03b683;
-    color: #2E8B57;
-    color: #3CB371;
-    color: #90EE90; */
-}
-
 .device_wrap{
     display: flex;
     justify-content: space-between;
@@ -71,7 +61,6 @@ h3{
 }
 
 .list div > *{
-    /* line-height: 1.5; */
     margin-bottom: 0;
 }
 

@@ -8,7 +8,6 @@ from django.conf import settings
 import sqlite3
 import json
 from datetime import datetime, timedelta
-import pathlib
 import os
 
 
@@ -41,7 +40,6 @@ class xml_parsre:
         x = requests.get('http://assignments.reaktor.com/birdnest/drones')
         try:
             root = ET.fromstring(x.content) # Read from string
-            # root = None
         except:
             root = None
         # root = ET.parse('birdnestapp/test.xml') # Read from file
@@ -181,8 +179,6 @@ def main():
         
 
 def create_connection(db_file):
-    # p = pathlib.Path(os.path.join(os.path.dirname( __file__ )))
-    # print(p.parent)
     db_file = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'db.sqlite3'))
     conn = None
     try:
@@ -211,7 +207,6 @@ def delete_rows(timeDelta):
     finally:
         if sqliteConnection:
             sqliteConnection.close()
-            # print("The SQLite connection is closed")
 
 
 if __name__ == "__main__":

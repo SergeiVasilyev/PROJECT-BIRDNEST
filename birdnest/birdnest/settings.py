@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
+# For productuion
+# ALLOWED_HOSTS = ['109.204.232.228', '127.0.0.1', '109.204.232.228:8080']
 
 # Application definition
 
@@ -118,6 +120,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'birdnestapp/static/'
+
+# For production
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

@@ -76,14 +76,10 @@
 				{
 					type: "scatter",
 					markerSize: 12,
-					// markerColor: "#5296be",
-					// showInLegend: true,
-					// legendText: "",
 					legendMarkerType: "circle",
 					legendMarkerColor: "grey",
 					toolTipContent: "<b>{name}</b><br/>X position: {x}<br/> Y position: {y}",
 					dataPoints: [
-
 					],
 				},
 				]
@@ -95,10 +91,11 @@
 				nest = {x: 250, y: 250, name: "NEST", markerSize: 10, markerColor: "#ae2a2a", }
 				circle = { x: 250, y: 250, name: "NDZ", markerSize: 175, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, }
 				// console.log('drones_in_NDZ_db', drones.responseJSON.drones_in_NDZ_db.length)
-				console.log(drones.responseJSON.inside_NDZ)
+				// console.log(drones.responseJSON.inside_NDZ)
 				if ($('#chartContainer').css('width') == '350px') {
 					circle = { x: 250, y: 250, name: "NDZ", markerSize: 120, markerColor: "rgba(100,149,237,0)", markerBorderColor: "rgba(174,42,42,0.5)", markerBorderThickness: 1.5, }
 				}
+				// Draw drones inside NDZ
 				if (drones.responseJSON.inside_NDZ.length != 0) { // if we want to get from data from database use this: drones.responseJSON.drones_in_NDZ_db
 					chart.options.data[0].dataPoints = []
 					drones.responseJSON.inside_NDZ.forEach((drone, idx) => { // if we want to get from data from database use this: drones.responseJSON.drones_in_NDZ_db
@@ -115,7 +112,7 @@
 					chart.options.data[0].dataPoints[0] = nest
 					chart.options.data[0].dataPoints[1] = circle
 				}
-
+				// Draw drones outside NDZ
 				if (drones.responseJSON.outside_NDZ.length != 0) {
 					chart.options.data[1].dataPoints = []
 					drones.responseJSON.outside_NDZ.forEach((drone, idx) => {
@@ -170,7 +167,6 @@
 						})
 					},
 					complete: function(drones) {
-						// console.log(drones)
 						render_drone(drones)
 						setTimeout(() => {  getDrones(last_item_id); }, 1800)
 					}
@@ -188,14 +184,12 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
 				<div class="container-fluid">
 					<a class="navbar-brand" href="{% url 'main' %}">
-						<!-- <img src="{% static 'img/logo.png' %}" alt="" width="35" height="30" class="d-inline-block align-text-top"> -->
 						<span>Birdnest project</span> 
 					</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse ms-5" id="navbarSupportedContent">
-						<!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0"> -->
 						<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 						<li class="nav-item">
 							<a class="nav-link" aria-current="page" href="https://assignments.reaktor.com/birdnest/">About</a>
