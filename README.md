@@ -5,6 +5,9 @@ Unfortunately some enthusiasts have been a little too curious about this elusive
 To preserve the nesting peace, authorities have declared the area within 100 meters of the nest a no drone zone (NDZ), but suspect some pilots may still be violating this rule.
 The authorities have set up drone monitoring equipment to capture the identifying information broadcasted by the drones in the area, and have given you access to a national drone pilot registry. They now need your help in tracking violations and getting in touch with the offenders.
 
+### More details
+https://assignments.reaktor.com/birdnest/
+
 ### Demo
 
 http://109.204.232.228:8080
