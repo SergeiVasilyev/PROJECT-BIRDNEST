@@ -8,6 +8,8 @@ The authorities have set up drone monitoring equipment to capture the identifyin
 ### More details
 https://assignments.reaktor.com/birdnest/
 
+The API is no longer working
+
 ### Demo
 
 http://109.204.232.228:8080
