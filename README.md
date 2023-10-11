@@ -22,6 +22,14 @@ http://109.204.232.228:8080
 - Immediately show the information from the last 10 minutes to anyone opening the application
 - Not require the user to manually refresh the view to see up-to-date information
 
+<b>Drone positions</b>
+
+GET assignments.reaktor.com/birdnest/drones
+
+<b>Pilot information</b>
+
+GET assignments.reaktor.com/birdnest/pilots/:serialNumber
+
 ### Stack
 
 - Django
