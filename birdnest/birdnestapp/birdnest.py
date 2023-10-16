@@ -11,6 +11,8 @@ from datetime import datetime, timedelta
 import os
 
 
+DRONES_REQUEST = 'http://assignments.reaktor.com/birdnest/drones'
+PILOT_REQUEST = 'http://assignments.reaktor.com/birdnest/pilots/'
 
 class pilot_info:
     def __init__(self, serialNumber):
@@ -26,18 +28,19 @@ class pilot_info:
     def parse(self, serialNumber):
         try:
             headers = {'Accept': 'application/json'}
-            x = requests.get(f'http://assignments.reaktor.com/birdnest/pilots/{serialNumber}', headers=headers)
+            x = requests.get(f'http://127.0.0.1:8001/pilots/{serialNumber}', headers=headers)
             responseJSON = x.json()
             # f = open('birdnestapp/test_pilot.json') # Read from file
             # responseJSON = json.load(f)
         except:
             responseJSON = None
+        print(responseJSON)
         return responseJSON
 
 
 class xml_parsre:
     def __init__(self):
-        x = requests.get('http://assignments.reaktor.com/birdnest/drones')
+        x = requests.get('http://127.0.0.1:8001')
         try:
             root = ET.fromstring(x.content) # Read from string
         except:
