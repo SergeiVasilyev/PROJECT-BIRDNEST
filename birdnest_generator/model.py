@@ -1,12 +1,11 @@
-from typing import Optional, List
 from pydantic import BaseModel, Field, condecimal, ConfigDict
-from decimal import Decimal
 from datetime import datetime
 import uuid
 from icecream import ic
 import random
 import xmltodict
 import time
+from .ip_generator import get_random_ipv4, get_random_ipv6, get_random_mac
 
 
 NAME = ['John', 'Kate', 'Mila', 'Jan', 'Anna', 'Peter', 'Alex', 'Dan']
@@ -18,9 +17,9 @@ class Drone(BaseModel):
     serialNumber: str = Field(default_factory=lambda: 'SN-' + str(uuid.uuid4().hex)[:10])
     model: str = Field(default_factory=lambda: f'model-{str(uuid.uuid4().hex)[:3]}')
     manufacturer: str = Field(default_factory=lambda: MANUFACTORER[random.randint(0, 4)])
-    mac: str = '9c:d2:ac:13:77:71'
-    ipv4: str = '66.11.30.157'
-    ipv6: str = '3b9f:6b6d:a9eb:03f5:8af8:efd3:e683:8a6e'
+    mac: str = Field(default_factory=get_random_mac)
+    ipv4: str = Field(default_factory=get_random_ipv4)
+    ipv6: str = Field(default_factory=get_random_ipv6)
     firmware: str = '4.0.1'
 
 
@@ -32,10 +31,6 @@ class Pilot(BaseModel):
     createdDt: datetime = Field(default_factory=lambda: datetime.now())
     email: str = Field(default_factory=lambda: f'{str(uuid.uuid4())[:6]}@gmail.com')
     drones: list[Drone]
-
-
-class Pilot_wrap(BaseModel):
-    pilots: list[Pilot]
     
 
 class DeviceInformation(BaseModel):
