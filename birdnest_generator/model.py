@@ -11,17 +11,17 @@ import time
 
 NAME = ['John', 'Kate', 'Mila', 'Jan', 'Anna', 'Peter', 'Alex', 'Dan']
 LAST_NAME = ["Smith", "Johnson", "Brown", "Davis", "Wilson", "Martinez", "Garcia", "Jones"]
+MANUFACTORER = ['DJI', 'AeroVironment', 'Parrot', 'PowerVision', 'Freefly']
 
 class Drone(BaseModel):
     model_config = ConfigDict(extra='allow')
-    serialNumber: str = 'serialNumber'
-    model: str = 'model'
-    manufacturer: str = 'manufacturer'
+    serialNumber: str = Field(default_factory=lambda: 'SN-' + str(uuid.uuid4().hex)[:10])
+    model: str = Field(default_factory=lambda: f'model-{str(uuid.uuid4().hex)[:3]}')
+    manufacturer: str = Field(default_factory=lambda: MANUFACTORER[random.randint(0, 4)])
     mac: str = '9c:d2:ac:13:77:71'
     ipv4: str = '66.11.30.157'
     ipv6: str = '3b9f:6b6d:a9eb:03f5:8af8:efd3:e683:8a6e'
     firmware: str = '4.0.1'
-
 
 
 class Pilot(BaseModel):
@@ -30,9 +30,12 @@ class Pilot(BaseModel):
     lastName: str = Field(default_factory=lambda: LAST_NAME[random.randint(0, 7)])
     phoneNumber: str = Field(default_factory=lambda: f"+{''.join(map(lambda x: str(random.randint(0, 9)), range(1, 12)))}")
     createdDt: datetime = Field(default_factory=lambda: datetime.now())
-    email: str = None
+    email: str = Field(default_factory=lambda: f'{str(uuid.uuid4())[:6]}@gmail.com')
     drones: list[Drone]
 
+
+class Pilot_wrap(BaseModel):
+    pilots: list[Pilot]
     
 
 class DeviceInformation(BaseModel):
@@ -61,9 +64,7 @@ if __name__=='__main__':
     # Generate drones and pilots
     all_drones = []
     for i in range(20):
-        serialNumber = 'SN-' + str(uuid.uuid4().hex)[:10]
-        # serialNumber = 'SN-1234567890'
-        all_drones.append(Drone(serialNumber=serialNumber, model=f'model-{str(uuid.uuid4().hex)[:3]}'))
+        all_drones.append(Drone())
 
     pilots = []
     for i in range(10):
