@@ -1,11 +1,8 @@
 import random
-import uuid
 import time
-import xmltodict
 
-from .model import Drone, Pilot, DeviceInformation, Capture, Report, Report_wrap, Pilot_wrap
+from .model import Drone, Pilot, DeviceInformation, Capture, Report, Report_wrap
 from icecream import ic
-from datetime import datetime
 
 def list_of_drones_and_pilots() -> tuple:
     all_drones = []
@@ -23,7 +20,6 @@ def drones_in_radar_range(all_drones) -> object:
     num_of_drones_in_radar_range = random.randint(1, 10)
     for i in range(num_of_drones_in_radar_range):
         r = random.randint(0, 29)
-        ic(r)
         drone = all_drones[r]
         drone.positionX = random.randint(-500000, 500000)
         drone.positionY = random.randint(-500000, 500000)

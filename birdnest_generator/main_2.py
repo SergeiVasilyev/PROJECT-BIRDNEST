@@ -1,9 +1,6 @@
-import time
 import asyncio
 import xmltodict
-import json
 
-from typing import Union
 from .birdest_data_generator_2 import list_of_drones_and_pilots, generate_report_of_drones_in_radar_range
 from icecream import ic
 from fastapi import FastAPI, Response
@@ -19,10 +16,8 @@ class BackgroundRunner:
 
     async def run_main(self):
         all_drones, self.pilots = list_of_drones_and_pilots()
-        loop = True
-        while loop == True:
+        while True:
             self.data = xmltodict.unparse(generate_report_of_drones_in_radar_range(all_drones), pretty=True)
-            loop = True
             await asyncio.sleep(2)
         
 
@@ -39,11 +34,8 @@ def read_root():
 
 @app.get("/pilots/{item_id}")
 def read_pilot(item_id: str):
-    print(item_id)
     pilots = runner.pilots
     for n in pilots:
         for x in n.drones:
-            ic(item_id, x.serialNumber)
             if item_id in x.serialNumber:
-                print(x.serialNumber)
                 return n.dict(exclude={'drones'})
