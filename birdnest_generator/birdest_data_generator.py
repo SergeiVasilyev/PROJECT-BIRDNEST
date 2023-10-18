@@ -1,64 +1,68 @@
 import random
-import uuid
 import time
-import xmltodict
 
 from .model import Drone, Pilot, DeviceInformation, Capture, Report, Report_wrap
 from icecream import ic
-from datetime import datetime
 
-
-# TODO: First, you need to build a database of drones and pilots, and then use it to add positions to them
-
-def generate_data():
-    drones_num = random.randint(1, 10)
-
+def list_of_drones_and_pilots() -> tuple:
     all_drones = []
-    for i in range(drones_num):
-        # serialNumber = 'SN-1234567890'
-        serialNumber = 'SN-' + str(uuid.uuid4().hex)[:10]
-        positionY = random.randint(-500000, 500000)
-        positionX = random.randint(-500000, 500000)
-        altitude=random.randint(1, 500000)
-        all_drones.append(Drone(serialNumber=serialNumber, 
-                                model=f'model-{str(uuid.uuid4().hex)[:3]}',
-                                positionX=positionX,
-                                positionY=positionY,
-                                altitude=altitude
-                                ))
+    all_pilots = []
+    for i in range(30):
+        drone = Drone()
+        all_drones.append(drone)
+        all_pilots.append(Pilot(drones=[drone]))
+    return all_drones, all_pilots
 
-    pilots = []
-    for n in all_drones:
-        pilots.append(Pilot(drones=[n]))
-        
+
+
+def drones_in_radar_range(all_drones) -> object:
+    drones = []
+    num_of_drones_in_radar_range = random.randint(1, 10)
+    for i in range(num_of_drones_in_radar_range):
+        r = random.randint(0, 29)
+        drone = all_drones[r]
+        drone.positionX = random.randint(-500000, 500000)
+        drone.positionY = random.randint(-500000, 500000)
+        drone.altitude = random.randint(-500000, 500000)
+        drones.append(drone)
+
+    return drones
+
+
+
+def get_report(detected_drones) -> object:
     updateIntervalMs = 2000
     report = Report(
         deviceInformation=DeviceInformation(updateIntervalMs=updateIntervalMs),
-        capture=(Capture(drone=all_drones))
+        capture=(Capture(drone=detected_drones))
     )
-    report = Report_wrap(report=report)
 
+    return Report_wrap(report=report)
+
+
+def report_obj_to_dict(report) -> dict:
+    """Convert object to dictionary
+    and rename fields deviceId and snapshotTimestamp
+    to @deviceId and @snapshotTimestamp
+    """
     report_dict = report.model_dump()
     report_dict['report']['deviceInformation']['@deviceId'] = report_dict['report'].pop('deviceId')
     report_dict['report']['capture']['@snapshotTimestamp'] = report_dict['report'].pop('snapshotTimestamp')
 
-    # print(xmltodict.unparse(report_dict, pretty=True))
-    # print(pilots.model_dump_json())
-
-    return [report_dict, pilots]
-    # return (xmltodict.unparse(report_dict, pretty=True))
-    # return (report_dict['report']['capture']['drone'].__len__())
+    return report_dict
 
 
-# loop = True
-# while loop == True:
-#     t0 = time.time()
+def generate_report_of_drones_in_radar_range(all_drones):
+    detected_drones = drones_in_radar_range(all_drones)
+    report = get_report(detected_drones)
+    report_dict = report_obj_to_dict(report)
 
-#     ic(generate_data())
+    return report_dict
 
-#     t1 = time.time()
-#     code_speed = t1-t0
-#     ic(code_speed)
 
-#     loop = True
-#     time.sleep(2)
+
+if __name__=='__main__':
+    all_drones, all_pilots = list_of_drones_and_pilots()
+    while True:
+        ic(generate_report_of_drones_in_radar_range(all_drones))
+        time.sleep(2)

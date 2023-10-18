@@ -40,7 +40,7 @@ class pilot_info:
 
 class xml_parsre:
     def __init__(self):
-        x = requests.get('http://127.0.0.1:8001')
+        x = requests.get('http://127.0.0.1:8001/drones/')
         try:
             root = ET.fromstring(x.content) # Read from string
         except:
