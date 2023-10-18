@@ -38,4 +38,9 @@ GET assignments.reaktor.com/birdnest/pilots/:serialNumber
 - Canvasjs
 
 
+### TODO
+1. Refactor main code
+2. Settings
+3. Tests
+
 
