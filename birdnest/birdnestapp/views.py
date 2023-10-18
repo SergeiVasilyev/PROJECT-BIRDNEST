@@ -56,7 +56,7 @@ def update_data(request):
         outside_NDZ = []
         inside_NDZ = []
 
-    last_item_id = int(request.GET.get('last_item_id')) if request.GET.get('last_item_id') != None else 0
+    last_item_id = int(request.GET.get('last_item_id')) if request.GET.get('last_item_id') != None and request.GET.get('last_item_id') != 'None' else 0
     drones_in_NDZ = DroneData.objects.filter(id__gt=last_item_id).order_by('-id')
     try:
         last_item_id_obj = {'last_item_id': drones_in_NDZ.first().id}
