@@ -36,6 +36,8 @@ GET assignments.reaktor.com/birdnest/pilots/:serialNumber
 - Python
 - SQLite
 - Canvasjs
+- FastAPI (added for data generator if reactor host not works)
+- Pydantyc
 
 
 ### TODO
