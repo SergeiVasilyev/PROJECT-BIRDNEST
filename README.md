@@ -11,13 +11,13 @@ Added data generator because Reactor Api no longer works.
 ### More details
 https://assignments.reaktor.com/birdnest/
 
-The API is no longer working
+The Reactor API is no longer working
 
 ### Demo
 
 http://109.204.232.228:8080
 
-The API is no longer working
+The Reactor API is no longer working
 
 ### Requirements
 
@@ -47,7 +47,7 @@ GET assignments.reaktor.com/birdnest/pilots/:serialNumber
 
 ### TODO
 1. Refactor main code
-2. Settings
+2. Run own data generator, because Reactor API is no longer working
 3. Tests
 
 
